@@ -8,11 +8,9 @@ public class Camo : Ability
     private float chargeTime = 0f;
     private bool isInvisible = false;
     private Color originalColor;
-    private SpriteRenderer spriteRenderer;
     public override void Start()
     {
         base.Start();
-        spriteRenderer = GetComponent<SpriteRenderer>();
         originalColor = abilityIcon.GetAbilityOverlayImage().color;
     }
     public override void Update()
@@ -21,7 +19,11 @@ public class Camo : Ability
     }
     public override void AbilityKeyHeld()
     {
-        if (isInvisible) return;
+        if (isInvisible)
+        {
+            spriteRenderer.color = new Color(spriteRenderer.color.r, spriteRenderer.color.g, spriteRenderer.color.b, 0.5f);
+            return;
+        }
         chargeTime += Time.deltaTime;
         Color orange = new Color32(255,165,0,255);
         orange.a = 0.5f;
@@ -54,6 +56,10 @@ public class Camo : Ability
     public override void AbilityKeyUp()
     {
         BecomeVisible();
+    }
+    public override void OnActivation()
+    {
+        base.OnActivation();
     }
     public override bool CanUseAbility()
     {

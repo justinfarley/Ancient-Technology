@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class TimeShift : Ability
 {
-    //TODO: Implementation
+    //DONE: Implementation
     /**
      * When key is pressed, the ability is activated for X REAL seconds (starting at 10)
      * while the ability is active, everything will move at 0.5f time scale 
@@ -16,7 +16,6 @@ public class TimeShift : Ability
      * 
      * then after the seconds are over simply put it on cooldown and set time to the original 1f
      */
-    private bool activated = false;
     private bool slowedTime = false;
     [SerializeField] private TMP_Text timerText, timeScaleText;
     [SerializeField] private KeyCode increaseTimeScaleKey, decreaseTimeScaleKey, maxTimeScaleKey, minTimeScaleKey;
@@ -33,10 +32,6 @@ public class TimeShift : Ability
     {
         base.Update();
         if (!slowedTime) return;
-        if (!activated)
-        {
-            OnActivation();
-        }
         if (Input.GetKeyDown(increaseTimeScaleKey) || Input.GetAxisRaw("Mouse ScrollWheel") > 0)
         {
             IncreaseTime(timeIncrement);
@@ -55,8 +50,9 @@ public class TimeShift : Ability
         }
         timeScaleText.text = Time.timeScale.ToString("F1") + "x";
     }
-    private void OnActivation()
+    public override void OnActivation()
     {
+        base.OnActivation();
         StartCoroutine(IncreaseTime_cr());
         Time.timeScale = 0.5f;
         Time.fixedDeltaTime = 0.02f * Time.timeScale;
@@ -67,7 +63,6 @@ public class TimeShift : Ability
         yellow.a = 0.5f;
         abilityIconOverlayImg.color = yellow;
         abilityIconOverlayImg.fillAmount = 1;
-        activated = true;
     }
     private void IncreaseTime(float amount)
     {
@@ -95,7 +90,6 @@ public class TimeShift : Ability
         timeScaleText.gameObject.SetActive(false);
         abilityIconOverlayImg.color = ogColor;
         abilityIconOverlayImg.fillAmount = 1;
-        activated = false;
         base.ExhaustAbility();
     }
     public override void AbilityKeyHeld()

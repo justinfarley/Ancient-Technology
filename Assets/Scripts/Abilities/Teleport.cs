@@ -93,6 +93,8 @@ public class Teleport : Ability
         //TODO: Hide radius
         if (!CanUseAbility()) return;
 
+        ResetToLastColor(eyeColor);
+        activated = false;
         if (radius.gameObject.activeSelf)
             radius.gameObject.SetActive(false);
         if (lineRenderer.enabled)
@@ -110,5 +112,9 @@ public class Teleport : Ability
         if (!base.CanUseAbility()) return false;
         //any other guard clauses to USE ability
         return true;
+    }
+    public override void OnActivation()
+    {
+        base.OnActivation();
     }
 }

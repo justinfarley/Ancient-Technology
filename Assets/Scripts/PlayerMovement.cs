@@ -8,11 +8,14 @@ public class PlayerMovement : CollidableObject
     [SerializeField] private float speed, groundCheckRadius, maxHSpeed, maxVSpeed;
     [SerializeField] private LayerMask groundCheckIgnoreLayers;
     [SerializeField] private Vector2 jumpForce;
+    private Animator animator;
+    private SpriteRenderer spriteRenderer;
     private float x;
     private Vector2 moveForce;
     private void Start()
     {
-
+        animator = GetComponent<Animator>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
     }
     private void FixedUpdate()
     {
@@ -32,10 +35,13 @@ public class PlayerMovement : CollidableObject
         {
             HandleJump();
         }
+        HandleSpriteFlipping();
     }
     private void HandleMovement()
     {
         x = Input.GetAxisRaw("Horizontal");
+
+        animator.SetInteger("Horizontal", (int)x);
 
         moveForce = new Vector2(x, moveForce.y);
     }
@@ -47,6 +53,25 @@ public class PlayerMovement : CollidableObject
         {
             Jump();
         }
+    }
+    private void HandleSpriteFlipping()
+    {
+        //this works for us since the idle animation is 
+        float xVal = animator.GetInteger("Horizontal");
+        if (xVal == 0) return;
+        if (xVal < 0) //if moving left
+        {
+            LookLeft();
+        }
+        else LookRight();
+    }
+    private void LookLeft()
+    {
+        spriteRenderer.flipX = true; //maybe change to rotating 180 on the Y axis
+    }
+    private void LookRight()
+    {
+        spriteRenderer.flipX = false;
     }
     private bool IsGrounded()
     {
