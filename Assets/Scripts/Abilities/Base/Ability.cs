@@ -9,7 +9,7 @@ public abstract class Ability : Unlockable
     protected float abilityCooldown;
     protected bool canUseAbility = false;
     private bool onCooldown = false;
-    [SerializeField] private KeyCode abilityKey;
+    [SerializeField] private List<KeyCode> abilityKeys;
     private GameObject abilityUIIcon;
     [SerializeField] protected AbstractAbilityIcon abilityIcon;
 
@@ -19,22 +19,44 @@ public abstract class Ability : Unlockable
         abilityUIIcon = abilityIcon.gameObject;
         OnUnlock += () => abilityUIIcon.SetActive(true);
     }
+    private bool PressedActionButtonDown()
+    {
+        foreach(var key in abilityKeys)
+        {
+            if (Input.GetKey(key))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+    private bool PressedActionButtonUp()
+    {
+        foreach (var key in abilityKeys)
+        {
+            if (Input.GetKeyUp(key))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
     public virtual void Update()
     {
         if (IsLocked()) return;
         if (OnCooldown()) return;
-        if (Input.GetKey(abilityKey))
+        if (PressedActionButtonDown())
         {
             AbilityKeyHeld();
         }
-        if (Input.GetKeyUp(abilityKey))
+        if (PressedActionButtonUp())
         {
             AbilityKeyUp();
         }
     }
     public abstract void AbilityKeyHeld();
     public abstract void AbilityKeyUp();
-    protected virtual void UseAbility()
+    protected virtual void ExhaustAbility()
     {
         canUseAbility = false;
         SetCooldown();
@@ -53,6 +75,10 @@ public abstract class Ability : Unlockable
     public bool OnCooldown()
     {
         return onCooldown;
+    }
+    public List<KeyCode> GetAbilityKeys()
+    {
+        return abilityKeys;
     }
     private IEnumerator SetCooldown_cr()
     {

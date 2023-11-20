@@ -7,7 +7,7 @@ public class Teleport : Ability
 {
     [Space(10f)]
     [Header("Teleportation Options")]
-    [Range(2f, 15f)]
+    [Range(0.1f, 15f)]
     [SerializeField] private float teleportRadius; //used as radius around player
     [SerializeField] private LayerMask teleportBlockers;
     [SerializeField] private Transform radius;
@@ -33,8 +33,6 @@ public class Teleport : Ability
 
         Vector2 currentTeleportPos = GetTeleportPosition();
 
-        print(CanTeleportToWorldPosition(currentTeleportPos));
-
         if(CanTeleportToWorldPosition(currentTeleportPos) && Input.GetKeyDown(KeyCode.Mouse0) && CanUseAbility())
         {
             TeleportToPos(currentTeleportPos);
@@ -44,11 +42,6 @@ public class Teleport : Ability
     {
         Collider2D[] hitsAtPoint = Physics2D.OverlapPointAll(worldPos, teleportBlockers);
 
-        foreach(var v in hitsAtPoint)
-        {
-            print(v);
-        }
-
         if (hitsAtPoint.Length > 0) return false;
 
         return true;
@@ -56,7 +49,7 @@ public class Teleport : Ability
     private void TeleportToPos(Vector2 pos)
     {
         transform.position = pos;
-        UseAbility();
+        ExhaustAbility();
     }
     private void OnDrawGizmos()
     {
@@ -106,9 +99,9 @@ public class Teleport : Ability
             lineRenderer.enabled = false;
         canUseAbility = false;
     }
-    protected override void UseAbility()
+    protected override void ExhaustAbility()
     {
-        base.UseAbility();
+        base.ExhaustAbility();
         radius.gameObject.SetActive(false);
         lineRenderer.enabled = false;
     }

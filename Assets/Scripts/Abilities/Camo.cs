@@ -49,7 +49,7 @@ public class Camo : Ability
         chargeTime = 0f;
         isInvisible = false;
         spriteRenderer.color = new Color(spriteRenderer.color.r, spriteRenderer.color.g, spriteRenderer.color.b, 1f);
-        UseAbility();
+        ExhaustAbility();
     }
     public override void AbilityKeyUp()
     {
@@ -59,9 +59,9 @@ public class Camo : Ability
     {
         return base.CanUseAbility();
     }
-    protected override void UseAbility()
+    protected override void ExhaustAbility()
     {
-        base.UseAbility();
+        base.ExhaustAbility();
         isInvisible = false;
         chargeTime = 0f;
         abilityIcon.GetAbilityOverlayImage().color = originalColor;

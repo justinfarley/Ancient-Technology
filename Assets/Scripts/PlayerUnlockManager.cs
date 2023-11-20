@@ -8,14 +8,17 @@ public class PlayerUnlockManager : MonoBehaviour
     private PlayerMovement player;
     private Teleport teleportAbility;
     private Camo camoAbility;
+    private TimeShift timeShiftAbility;
     //TODO: add restof abilities here
     private void Start()
     {
         player = FindObjectOfType<PlayerMovement>();
         teleportAbility = player.GetComponent<Teleport>();
         camoAbility = player.GetComponent<Camo>();
-        StartCoroutine(UnlockAfterSeconds_cr(teleportAbility, 2));
-        StartCoroutine(UnlockAfterSeconds_cr(camoAbility, 4f));
+        timeShiftAbility = player.GetComponent<TimeShift>();
+        StartCoroutine(UnlockAfterSeconds_cr(teleportAbility, 1));
+        StartCoroutine(UnlockAfterSeconds_cr(camoAbility, 1f));
+        StartCoroutine(UnlockAfterSeconds_cr(timeShiftAbility, 1f));
     }
     public static void UnlockAbility(Ability ability)
     {

@@ -81,4 +81,20 @@ public class PlayerMovement : CollidableObject
     public override void TriggerEnter(Collider2D collision)
     {
     }
+    public void SetMaxHSpeed(float speed)
+    {
+        maxHSpeed += speed;
+    }
+    public void SetMaxVSpeed(float speed)
+    {
+        maxVSpeed += speed;
+    }
+    public float GetMaxVSpeed()
+    {
+        return maxVSpeed;
+    }
+    public float GetMaxHSpeed()
+    {
+        return maxHSpeed;
+    }
 }
