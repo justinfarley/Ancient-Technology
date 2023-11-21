@@ -7,11 +7,14 @@ public class Camo : Ability
     private float timeToUseAbility = 2f;
     private float chargeTime = 0f;
     private bool isInvisible = false;
-    private Color originalColor;
+
     public override void Start()
     {
         base.Start();
-        originalColor = abilityIcon.GetAbilityOverlayImage().color;
+        OnUnlock += () =>
+        {
+            type = Type.Both;
+        };
     }
     public override void Update()
     {
@@ -25,11 +28,13 @@ public class Camo : Ability
             return;
         }
         chargeTime += Time.deltaTime;
-        Color orange = new Color32(255,165,0,255);
-        orange.a = 0.5f;
-        abilityIcon.GetAbilityOverlayImage().color = orange;
-        abilityIcon.GetAbilityOverlayImage().fillAmount = chargeTime / timeToUseAbility;
-        if(chargeTime >= timeToUseAbility)
+        abilityIconOverlayImg.fillAmount = chargeTime / timeToUseAbility;
+        if (!GetComponent<PlayerMovement>().IsGrounded())
+        {
+            chargeTime = 0f;
+            abilityIconOverlayImg.fillAmount = chargeTime / timeToUseAbility;
+        }
+        if (chargeTime >= timeToUseAbility)
         {
             BecomeInvisible();
         }
@@ -55,6 +60,7 @@ public class Camo : Ability
     }
     public override void AbilityKeyUp()
     {
+        base.AbilityKeyUp();
         BecomeVisible();
     }
     public override void OnActivation()
@@ -70,13 +76,15 @@ public class Camo : Ability
         base.ExhaustAbility();
         isInvisible = false;
         chargeTime = 0f;
-        abilityIcon.GetAbilityOverlayImage().color = originalColor;
-        abilityIcon.GetAbilityOverlayImage().fillAmount = 0f;
     }
     public bool UsingAbility()
     {
         if (isInvisible) return true;
         if (chargeTime > 0) return true;
         return false;
+    }
+    public bool IsInvisible()
+    {
+        return isInvisible;
     }
 }

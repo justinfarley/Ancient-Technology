@@ -73,7 +73,7 @@ public class PlayerMovement : CollidableObject
     {
         spriteRenderer.flipX = false;
     }
-    private bool IsGrounded()
+    public bool IsGrounded()
     {
         Collider2D hit = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, ~groundCheckIgnoreLayers);
         if(hit == null) return false;

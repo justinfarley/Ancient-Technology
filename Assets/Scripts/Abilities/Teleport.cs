@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// TODO: maybe eventually make like powerups that increase the range of the ability or something idk at the end
+/// </summary>
 public class Teleport : Ability
 {
     [Space(10f)]
@@ -12,6 +15,7 @@ public class Teleport : Ability
     [SerializeField] private LayerMask teleportBlockers;
     [SerializeField] private Transform radius;
     private LineRenderer lineRenderer;
+
     public override void Start()
     {
         base.Start();
@@ -19,7 +23,7 @@ public class Teleport : Ability
         lineRenderer.enabled = false;
         OnUnlock += () =>
         {
-
+            type = Type.Both;
         };
     }
     public override void Update()
@@ -38,6 +42,7 @@ public class Teleport : Ability
             TeleportToPos(currentTeleportPos);
         }
     }
+
     private bool CanTeleportToWorldPosition(Vector3 worldPos)
     {
         Collider2D[] hitsAtPoint = Physics2D.OverlapPointAll(worldPos, teleportBlockers);
@@ -90,6 +95,7 @@ public class Teleport : Ability
     }
     public override void AbilityKeyUp()
     {
+        base.AbilityKeyUp();
         //TODO: Hide radius
         if (!CanUseAbility()) return;
 

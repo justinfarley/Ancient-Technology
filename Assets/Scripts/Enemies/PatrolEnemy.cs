@@ -2,37 +2,28 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class PatrolEnemy : Enemy
 {
     [Header("Start and End points for the patrol path")]
     [SerializeField] private Transform startTransform;
     [SerializeField] private Transform endTransform;
-    [Header("Enemy Properties")]
-    [SerializeField] private float sightRange;
+    [Header("Patrol Enemy Properties")]
     [SerializeField] private float downTimeBetweenMovements, timeToMove, moveSpeed, maxMoveSpeed;
-    [SerializeField] private bool startFacingRight;
-    private bool noticedPlayer = false, isFacingRight = true;
-    private PlayerMovement player;
     private Vector2 startPos, endPos;
     private SpriteRenderer spriteRenderer;
-    private void Start()
+    protected override void Start()
     {
-        player = FindObjectOfType<PlayerMovement>();
+        base.Start();
         spriteRenderer = GetComponent<SpriteRenderer>();
         startPos = startTransform.position;
         endPos = endTransform.position;
-        if (startFacingRight) //inverse is set since the beginning of the coroutine swaps it
-            isFacingRight = false;
-        else
-            isFacingRight = true;
+
         Patrol();
     }
-    private void Update()
+    protected override void Update()
     {
-        if(IsPlayerInSightDistance() && IsEnemyFacingTowardsPlayer() && !noticedPlayer)
-        {
-            NoticedPlayer();
-        }
+        base.Update();
     }
     private void FixedUpdate()
     {
@@ -44,29 +35,7 @@ public class PatrolEnemy : Enemy
         moveVector.x = Mathf.Clamp(moveVector.x, -maxMoveSpeed, maxMoveSpeed);
         _rb.velocity = moveVector;
     }
-    private bool IsPlayerInSightDistance()
-    {
-        return Vector2.Distance(player.transform.position, transform.position) <= sightRange;
-    }
-    private bool IsEnemyFacingTowardsPlayer()
-    {
-        if (isFacingRight && player.transform.position.x > transform.position.x)
-        {
-            return true;
-        }
-        else if (!isFacingRight && player.transform.position.x < transform.position.x)
-        {
-            return true;
-        }
-        return false;
-    }
-    private void NoticedPlayer()
-    {
-        print("NOTICED PLAYER!");
-        noticedPlayer = true;
-        StopAllCoroutines();
-        Destroy(gameObject); //test
-    }
+
     private void Patrol()
     {
         StartCoroutine(Patrol_cr(startPos, endPos));
@@ -75,10 +44,6 @@ public class PatrolEnemy : Enemy
     {
         isFacingRight = !isFacingRight;
         spriteRenderer.flipX = isFacingRight;
-        Vector2 dir = end - start;
-        float distance = Vector2.Distance(start, end);
-        float time = timeToMove;
-        float speed = distance / time;
         for(float f = 0; f < timeToMove; f += Time.deltaTime)
         {
             float elapsed = f / timeToMove;

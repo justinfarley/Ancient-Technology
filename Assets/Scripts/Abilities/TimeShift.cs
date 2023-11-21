@@ -19,14 +19,16 @@ public class TimeShift : Ability
     private bool slowedTime = false;
     [SerializeField] private TMP_Text timerText, timeScaleText;
     [SerializeField] private KeyCode increaseTimeScaleKey, decreaseTimeScaleKey, maxTimeScaleKey, minTimeScaleKey;
-    private readonly float timeIncrement = 0.1f, minTimeScale = 0.1f, maxTimeScale = 2f, abilityDuration = 10f;
-    private Color ogColor;
-    private Image abilityIconOverlayImg;
+    private readonly float timeIncrement = 0.1f, minTimeScale = 0.1f, maxTimeScale = 2f, abilityDuration = 1000f;
     public override void Start()
     {
         base.Start();
         abilityIconOverlayImg = abilityIcon.transform.GetChild(0).GetComponent<Image>();
         ogColor = abilityIconOverlayImg.color;
+        OnUnlock += () =>
+        {
+            type = Type.ColorOnly;
+        };
     }
     public override void Update()
     {
@@ -58,10 +60,6 @@ public class TimeShift : Ability
         Time.fixedDeltaTime = 0.02f * Time.timeScale;
         timeScaleText.gameObject.SetActive(true);
         timerText.gameObject.SetActive(true);
-        print("gel");
-        Color yellow = Color.yellow;
-        yellow.a = 0.5f;
-        abilityIconOverlayImg.color = yellow;
         abilityIconOverlayImg.fillAmount = 1;
     }
     private void IncreaseTime(float amount)
@@ -88,7 +86,6 @@ public class TimeShift : Ability
         Time.fixedDeltaTime = 0.02f;
         timerText.gameObject.SetActive(false);
         timeScaleText.gameObject.SetActive(false);
-        abilityIconOverlayImg.color = ogColor;
         abilityIconOverlayImg.fillAmount = 1;
         base.ExhaustAbility();
     }
@@ -123,6 +120,7 @@ public class TimeShift : Ability
         for (float f = abilityDuration; f > 0; f -= Time.unscaledDeltaTime)
         {
             timerText.text = string.Format("{0:0.0}",f);
+            abilityIconOverlayImg.fillAmount = f / abilityDuration;
             yield return null;
         }
         ExhaustAbility();

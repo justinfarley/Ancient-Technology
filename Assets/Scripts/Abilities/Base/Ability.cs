@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public abstract class Ability : Unlockable
 {
@@ -15,14 +16,25 @@ public abstract class Ability : Unlockable
     protected SpriteRenderer spriteRenderer;
     [SerializeField] protected AbstractAbilityIcon abilityIcon;
     [SerializeField] protected Color eyeColor;
+    protected Color ogColor;
+    protected Image abilityIconOverlayImg;
     protected Color lastColor;
     protected static List<Color> colorList = new List<Color>();
-
+    protected Type type;
+    public enum Type
+    {
+        None,
+        FillOnly,
+        ColorOnly,
+        Both
+    }
     public override void Start()
     {
         base.Start();
         spriteRenderer = GetComponent<SpriteRenderer>();
         abilityUIIcon = abilityIcon.gameObject;
+        abilityIconOverlayImg = abilityIcon.transform.GetChild(0).GetComponent<Image>();
+        ogColor = abilityIconOverlayImg.color;
         OnUnlock += () => abilityUIIcon.SetActive(true);
     }
     private bool PressedActionButtonDown()
@@ -68,13 +80,45 @@ public abstract class Ability : Unlockable
     public virtual void OnActivation()
     {
         SetToEyeColor();
+        SetIconOverlayColor(eyeColor);
     }
-    public abstract void AbilityKeyHeld();
-    public abstract void AbilityKeyUp();
+    private void SetIconOverlayColor(Color color)
+    {
+        switch (type)
+        {
+            case Type.Both:
+                Color temp = color;
+                temp.a = 0.5f;
+                abilityIconOverlayImg.color = temp;
+                abilityIconOverlayImg.fillAmount = 1;
+                break;
+            case Type.ColorOnly:
+                temp = color;
+                temp.a = 0.5f;
+                abilityIconOverlayImg.color = temp;
+                break;
+            case Type.FillOnly:
+                abilityIconOverlayImg.fillAmount = 1;
+                break;
+            case Type.None:
+                break;
+        }
+
+    }
+    public virtual void AbilityKeyHeld()
+    {
+    }
+    public virtual void AbilityKeyUp()
+    {
+        abilityIconOverlayImg.color = ogColor;
+        abilityIconOverlayImg.fillAmount = 0;
+    }
     protected virtual void ExhaustAbility()
     {
         canUseAbility = false;
         activated = false;
+        abilityIconOverlayImg.color = ogColor;
+        abilityIconOverlayImg.fillAmount = 1;
         ResetToLastColor(eyeColor);
         SetCooldown();
     }
@@ -107,10 +151,6 @@ public abstract class Ability : Unlockable
     }
     protected void ResetToLastColor(Color colorToRemove)
     {
-        foreach(var v in colorList)
-        {
-            print(v);
-        }
         if (colorList.Count > 1)
         {
             colorList.Remove(colorToRemove);
