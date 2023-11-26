@@ -43,7 +43,8 @@ public class PatrolEnemy : Enemy
     private IEnumerator Patrol_cr(Vector2 start, Vector2 end)
     {
         isFacingRight = !isFacingRight;
-        spriteRenderer.flipX = isFacingRight;
+        spriteRenderer.flipX = !isFacingRight;
+        animator.SetInteger("Horizontal", 1);
         for(float f = 0; f < timeToMove; f += Time.deltaTime)
         {
             float elapsed = f / timeToMove;
@@ -55,6 +56,7 @@ public class PatrolEnemy : Enemy
                 break;
             }
         }
+        animator.SetInteger("Horizontal", 0);
         yield return new WaitForSeconds(downTimeBetweenMovements);
         StartCoroutine(Patrol_cr(end, start));
     }

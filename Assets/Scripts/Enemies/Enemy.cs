@@ -17,6 +17,7 @@ public class Enemy : CollidableObject
     [SerializeField] protected bool startFacingRight;
     [SerializeField] protected float sightRange;
     [SerializeField] private GameObject noticedPopup;
+    protected Animator animator;
     protected float health;
     protected Action OnDamageTaken;
     protected bool noticedPlayer = false, isFacingRight = true;
@@ -29,6 +30,7 @@ public class Enemy : CollidableObject
             isFacingRight = false;
         else
             isFacingRight = true;
+        animator = GetComponent<Animator>();
         player = FindObjectOfType<PlayerMovement>();
         health = maxHealth;
         OnDamageTaken += DamageTaken;
@@ -57,6 +59,7 @@ public class Enemy : CollidableObject
         noticedPlayer = true;
         StopAllCoroutines();
         noticedPopup.SetActive(true);
+        animator.SetInteger("Horizontal", 0);
         StartCoroutine(NewSpawn_cr());
         //Destroy(gameObject); //test
     }
