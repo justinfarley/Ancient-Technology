@@ -37,7 +37,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0.27}
+  m_AnchoredPosition: {x: 0, y: 0.392}
   m_SizeDelta: {x: 100, y: 48.74255}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &2783654284044500663
@@ -206,6 +206,8 @@ MonoBehaviour:
   timeBetweenWords: 0.25
   timeBetweenSentences: 1
   speedMultiplier: 0.1
+  timeBetweenScripts: 0
+  scriptsToRead: 
   triggerType: 0
   gauntlet: {fileID: 0}
   player: {fileID: 0}
@@ -226,7 +228,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.32, y: 0.32}
+    oldSize: {x: 0.64, y: 0.64}
     newSize: {x: 0.32, y: 0.32}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -252,7 +254,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.32, y: 0.32}
+    oldSize: {x: 0.64, y: 0.64}
     newSize: {x: 0.32, y: 0.32}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -278,7 +280,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.32, y: 0.32}
+    oldSize: {x: 0.64, y: 0.64}
     newSize: {x: 0.32, y: 0.32}
     adaptiveTilingThreshold: 0.5
     drawMode: 0

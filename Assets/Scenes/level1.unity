@@ -1226,6 +1226,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8035261421824274671, guid: 0ffe35c7892897940b0d251c74d9a6ab,
+        type: 3}
+      propertyPath: m_Color.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8035261421824274671, guid: 0ffe35c7892897940b0d251c74d9a6ab,
+        type: 3}
+      propertyPath: m_Color.g
+      value: 0.25242066
+      objectReference: {fileID: 0}
+    - target: {fileID: 8035261421824274671, guid: 0ffe35c7892897940b0d251c74d9a6ab,
+        type: 3}
+      propertyPath: m_Color.r
+      value: 0.6792453
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0ffe35c7892897940b0d251c74d9a6ab, type: 3}
 --- !u!1 &1114615051
@@ -1826,6 +1841,32 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   color: {r: 0, g: 0, b: 0, a: 1}
   timeToFade: 1.25
+--- !u!1 &1566337847 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8035261421824274664, guid: 0ffe35c7892897940b0d251c74d9a6ab,
+    type: 3}
+  m_PrefabInstance: {fileID: 1112039023}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &1566337853
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1566337847}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 29e8118ceb9d0be4396e57a42a1df48c, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &1602532345
 GameObject:
   m_ObjectHideFlags: 0
@@ -2733,12 +2774,12 @@ PrefabInstance:
     - target: {fileID: 2783654284071515505, guid: f0ebb1b46b34c2243a52ce435c055943,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 35.01
+      value: 33.68
       objectReference: {fileID: 0}
     - target: {fileID: 2783654284071515505, guid: f0ebb1b46b34c2243a52ce435c055943,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -2
+      value: -1.52
       objectReference: {fileID: 0}
     - target: {fileID: 2783654284071515505, guid: f0ebb1b46b34c2243a52ce435c055943,
         type: 3}
