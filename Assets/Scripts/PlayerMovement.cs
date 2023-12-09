@@ -12,6 +12,7 @@ public class PlayerMovement : CollidableObject
     private SpriteRenderer spriteRenderer;
     private float x;
     private Vector2 moveForce;
+    private float jumpDelay = 0f;
     private void Start()
     {
         animator = GetComponent<Animator>();
@@ -48,8 +49,8 @@ public class PlayerMovement : CollidableObject
     private void HandleJump()
     {
         if (!IsGrounded()) return;
-        if (GetComponent<Camo>().UsingAbility()) return; //if using camo, cannot jump
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (GetComponent<Camo>() && GetComponent<Camo>().UsingAbility()) return; //if using camo, cannot jump
+        if (Input.GetKey(KeyCode.Space))
         {
             Jump();
         }
@@ -82,7 +83,20 @@ public class PlayerMovement : CollidableObject
     }
     private void Jump()
     {
+        if (jumpDelay > 0) return;
+        _rb.velocity = new Vector2(_rb.velocity.x, 0); //remove for conservation of vertical momentum
         _rb.AddForce(jumpForce, ForceMode2D.Impulse);
+        jumpDelay = 0.1f;
+        StartCoroutine(JumpDelay_cr());
+    }
+    private IEnumerator JumpDelay_cr()
+    {
+        for(float i = jumpDelay; i > 0; i -= Time.deltaTime)
+        {
+            jumpDelay = i;
+            yield return null;
+        }
+        jumpDelay = 0;
     }
     private void OnDrawGizmos()
     {

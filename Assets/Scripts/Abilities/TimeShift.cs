@@ -19,7 +19,7 @@ public class TimeShift : Ability
     private bool slowedTime = false;
     [SerializeField] private TMP_Text timerText, timeScaleText;
     [SerializeField] private KeyCode increaseTimeScaleKey, decreaseTimeScaleKey, maxTimeScaleKey, minTimeScaleKey;
-    private readonly float timeIncrement = 0.1f, minTimeScale = 0.1f, maxTimeScale = 2f, abilityDuration = 1000f;
+    private readonly float timeIncrement = 0.1f, minTimeScale = 0.1f, maxTimeScale = 2f, abilityDuration = 15f;
     public override void Start()
     {
         base.Start();
@@ -28,7 +28,12 @@ public class TimeShift : Ability
         OnUnlock += () =>
         {
             type = Type.ColorOnly;
+            GameManager.instance.HasTimeSlow = true;
         };
+        if (GameManager.instance.HasTimeSlow)
+        {
+            Unlock();
+        }
     }
     public override void Update()
     {

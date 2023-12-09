@@ -6,6 +6,14 @@ using UnityEngine.UI;
 
 public abstract class Ability : Unlockable
 {
+    public enum Abilities
+    {
+        None,
+        Teleportation,
+        Camo,
+        TimeSlow,
+        Attack,
+    }
     [SerializeField]
     protected float abilityCooldown;
     protected bool canUseAbility = false;
@@ -28,14 +36,22 @@ public abstract class Ability : Unlockable
         ColorOnly,
         Both
     }
+    private void Awake()
+    {
+        abilityUIIcon = abilityIcon.transform.GetChild(0).gameObject;
+        abilityIconOverlayImg = abilityIcon.transform.GetChild(1).GetComponent<Image>();
+        OnUnlock += () =>
+        {
+            abilityUIIcon.SetActive(true);
+            abilityIcon.GetComponent<Animator>().SetTrigger("Unlocked");
+            print(abilityUIIcon.name);
+        };
+    }
     public override void Start()
     {
         base.Start();
         spriteRenderer = GetComponent<SpriteRenderer>();
-        abilityUIIcon = abilityIcon.gameObject;
-        abilityIconOverlayImg = abilityIcon.transform.GetChild(0).GetComponent<Image>();
         ogColor = abilityIconOverlayImg.color;
-        OnUnlock += () => abilityUIIcon.SetActive(true);
     }
     private bool PressedActionButtonDown()
     {

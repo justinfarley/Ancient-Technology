@@ -14,7 +14,12 @@ public class Camo : Ability
         OnUnlock += () =>
         {
             type = Type.Both;
+            GameManager.instance.HasCamo = true;
         };
+        if (GameManager.instance.HasCamo)
+        {
+            Unlock();
+        }
     }
     public override void Update()
     {

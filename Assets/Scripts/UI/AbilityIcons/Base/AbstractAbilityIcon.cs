@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,11 +10,13 @@ public abstract class AbstractAbilityIcon : MonoBehaviour
     protected Ability ability;
     protected Image abilityIconImage, abilityOverlayImage;
     private Color disabledColor = new Color32(255, 127, 127, 255);
+    private float iconSize = 150f;
 
     protected virtual void Awake()
     {
-        abilityIconImage = GetComponent<Image>();
-        abilityOverlayImage = transform.GetChild(0).GetComponent<Image>();
+        abilityIconImage = transform.GetChild(0).GetComponent<Image>();
+        abilityOverlayImage = transform.GetChild(1).GetComponent<Image>();
+        print(transform.GetChild(1).GetComponent<Image>().name);
     }
     protected virtual void Start()
     {
@@ -39,5 +42,12 @@ public abstract class AbstractAbilityIcon : MonoBehaviour
             yield return null;
         }
     }
-    
+    public void UnlockAnimationEvent()
+    {
+        GetComponent<Animator>().enabled = false;
+        GetComponent<RectTransform>().sizeDelta = new Vector2(iconSize, iconSize);
+        transform.localScale = new Vector3(1, 1, 1);
+        
+    }
+
 }

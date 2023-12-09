@@ -12,6 +12,7 @@ public class TimeShiftIcon : AbstractAbilityIcon
     protected override void Start()
     {
         base.Start();
-        abilityIconImage.gameObject.SetActive(false);
+        if (!GameManager.instance.HasTimeSlow) abilityIconImage.gameObject.SetActive(false);
+        else abilityIconImage.gameObject.SetActive(true);
     }
 }

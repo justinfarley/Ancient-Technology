@@ -12,6 +12,7 @@ public class TeleportIcon : AbstractAbilityIcon
     protected override void Start()
     {
         base.Start();
-        abilityIconImage.gameObject.SetActive(false);
+        if(!GameManager.instance.HasTeleport) abilityIconImage.gameObject.SetActive(false);
+        else abilityIconImage.gameObject.SetActive(true);
     }
 }

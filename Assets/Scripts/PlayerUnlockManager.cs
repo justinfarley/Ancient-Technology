@@ -4,11 +4,15 @@ using UnityEngine;
 
 public class PlayerUnlockManager : MonoBehaviour
 {
-    private static List<Ability> unlockedAbilities = new List<Ability>(); //for save data
+    public static Dictionary<int, Ability.Abilities> scriptToAbility = new Dictionary<int, Ability.Abilities>()
+    {
+        { 2, Ability.Abilities.Teleportation},
+    };
     private PlayerMovement player;
     private Teleport teleportAbility;
     private Camo camoAbility;
     private TimeShift timeShiftAbility;
+    //private Attack attackAbility;
     //TODO: add restof abilities here
     private void Start()
     {
@@ -16,14 +20,33 @@ public class PlayerUnlockManager : MonoBehaviour
         teleportAbility = player.GetComponent<Teleport>();
         camoAbility = player.GetComponent<Camo>();
         timeShiftAbility = player.GetComponent<TimeShift>();
-        StartCoroutine(UnlockAfterSeconds_cr(teleportAbility, 1));
-        StartCoroutine(UnlockAfterSeconds_cr(camoAbility, 1f));
-        StartCoroutine(UnlockAfterSeconds_cr(timeShiftAbility, 1f));
+
+        if (GameManager.instance.HasTeleport) UnlockAbility(teleportAbility);
+        if (GameManager.instance.HasCamo) UnlockAbility(camoAbility);
+        if (GameManager.instance.HasTimeSlow) UnlockAbility(timeShiftAbility);
+        //StartCoroutine(UnlockAfterSeconds_cr(teleportAbility, 1));
+        //StartCoroutine(UnlockAfterSeconds_cr(camoAbility, 1f));
+        //StartCoroutine(UnlockAfterSeconds_cr(timeShiftAbility, 1f));
+    }
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.M))
+        {
+            UnlockAbility(teleportAbility);
+        }
+        else  if (Input.GetKeyDown(KeyCode.Comma))
+        {
+            UnlockAbility(camoAbility);
+        }
+        else if (Input.GetKeyDown(KeyCode.Period))
+        {
+            UnlockAbility(timeShiftAbility);
+        }
+
     }
     public static void UnlockAbility(Ability ability)
     {
         ability.Unlock();
-        unlockedAbilities.Add(ability);
     }
     //test coroutine
     private IEnumerator UnlockAfterSeconds_cr(Ability ability, float t)
@@ -31,4 +54,17 @@ public class PlayerUnlockManager : MonoBehaviour
         yield return new WaitForSeconds(t);
         UnlockAbility(ability);
     }
+    public Teleport GetTeleport()
+    {
+        return teleportAbility;
+    }
+    public Camo GetCamo()
+    {
+        return camoAbility;
+    }
+    public TimeShift GetTimeSlow()
+    {
+        return timeShiftAbility;
+    }
+
 }

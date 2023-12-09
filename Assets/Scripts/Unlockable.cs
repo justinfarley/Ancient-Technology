@@ -13,9 +13,11 @@ public abstract class Unlockable : MonoBehaviour
     {
         OnUnlock += () => locked = false;
         OnUnlock += () => print("Unlocked " + upgradeName);
+        OnUnlock += () => GameManager.instance.SaveGame();
     }
-    public void Unlock()
+    public virtual void Unlock()
     {
+        if (!locked) return; 
         OnUnlock?.Invoke();
     }
     public bool IsLocked()

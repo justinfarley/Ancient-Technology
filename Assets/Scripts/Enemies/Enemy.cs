@@ -16,13 +16,15 @@ public class Enemy : CollidableObject
     [SerializeField] protected float maxHealth;
     [SerializeField] protected bool startFacingRight;
     [SerializeField] protected float sightRange;
+    [SerializeField] protected float moveSpeed;
     [SerializeField] private GameObject noticedPopup;
     protected Animator animator;
     protected float health;
     protected Action OnDamageTaken;
     protected bool noticedPlayer = false, isFacingRight = true;
     private PlayerMovement player;
-
+    protected Action OnNoticedPlayer;
+    private const string KILL_PLAYER = "KillPlayer";
 
     protected virtual void Start()
     {
@@ -34,6 +36,7 @@ public class Enemy : CollidableObject
         player = FindObjectOfType<PlayerMovement>();
         health = maxHealth;
         OnDamageTaken += DamageTaken;
+        OnNoticedPlayer += Noticed;
     }
     protected virtual void Update()
     {
@@ -46,6 +49,25 @@ public class Enemy : CollidableObject
             Instantiate(this.gameObject, gameObject.transform.position, Quaternion.identity); 
         }
     }
+    private void Noticed()
+    {
+        print("NOTICED PLAYER!");
+        noticedPlayer = true;
+        StopAllCoroutines();
+        noticedPopup.SetActive(true);
+        HandleAnimatorOnNoticed();
+        IncreaseMoveSpeed();
+        FindObjectOfType<DeathManager>().Invoke(KILL_PLAYER, 1f);
+    }
+    private void IncreaseMoveSpeed()
+    {
+        moveSpeed *= 2.5f;
+    }
+    private void HandleAnimatorOnNoticed()
+    {
+        animator.SetBool("isRunning", true);
+        animator.SetInteger("Horizontal", 0);
+    }
     private void NoticedPlayer()
     {
         Camo playerCamo = player.GetComponent<Camo>();
@@ -55,26 +77,7 @@ public class Enemy : CollidableObject
             return;
         }
         //-----------------------------------------------------------------
-        print("NOTICED PLAYER!");
-        noticedPlayer = true;
-        StopAllCoroutines();
-        noticedPopup.SetActive(true);
-        animator.SetInteger("Horizontal", 0);
-        StartCoroutine(NewSpawn_cr());
-        //Destroy(gameObject); //test
-    }
-    /// <summary>
-    /// test method
-    /// </summary>
-    /// <returns></returns>
-    private IEnumerator NewSpawn_cr()
-    {
-        yield return new WaitForSeconds(2);
-        Enemy e =Instantiate(gameObject, gameObject.transform.position, Quaternion.identity).GetComponent<Enemy>();
-        e.health = e.maxHealth;
-        e.noticedPlayer = false;
-        e.noticedPopup.SetActive(false);
-        Destroy(gameObject);
+        OnNoticedPlayer?.Invoke();
     }
 
     private bool IsPlayerInSightDistance()

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,6 +15,7 @@ public class Teleport : Ability
     [SerializeField] private float teleportRadius; //used as radius around player
     [SerializeField] private LayerMask teleportBlockers;
     [SerializeField] private Transform radius;
+    [SerializeField] private GameObject effect;
     private LineRenderer lineRenderer;
 
     public override void Start()
@@ -24,7 +26,12 @@ public class Teleport : Ability
         OnUnlock += () =>
         {
             type = Type.Both;
+            GameManager.instance.HasTeleport = true;
         };
+        if (GameManager.instance.HasTeleport)
+        {
+            Unlock();
+        }
     }
     public override void Update()
     {
@@ -53,6 +60,9 @@ public class Teleport : Ability
     }
     private void TeleportToPos(Vector2 pos)
     {
+        //spawn effect at player and the pos
+        Instantiate(effect, transform.position, Quaternion.identity);
+        Instantiate(effect, pos, Quaternion.identity);
         transform.position = pos;
         ExhaustAbility();
     }
@@ -66,8 +76,8 @@ public class Teleport : Ability
         Vector2 cursorPos = Input.mousePosition;
         Vector2 cursorWorldPos = Camera.main.ScreenToWorldPoint(cursorPos);
         Vector2 pos = transform.position;
-        lineRenderer.startWidth = 0.1f;
-        lineRenderer.endWidth = 0.1f;
+        lineRenderer.startWidth = 0.05f;
+        lineRenderer.endWidth = 0.05f;
         lineRenderer.SetPosition(0, pos);
         if (Vector2.Distance(transform.position, cursorWorldPos) <= teleportRadius)
         {
