@@ -332,6 +332,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   radius: {fileID: 750492395206878336}
+  effect: {fileID: 0}
 --- !u!114 &750492395285956149
 MonoBehaviour:
   m_ObjectHideFlags: 0

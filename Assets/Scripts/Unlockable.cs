@@ -5,15 +5,18 @@ using UnityEngine;
 
 public abstract class Unlockable : MonoBehaviour
 {
-    private bool locked = true;
+    protected bool locked = true;
     protected int id;
     [SerializeField] protected string upgradeName;
     protected Action OnUnlock;
-    public virtual void Start()
+    public virtual void Awake()
     {
         OnUnlock += () => locked = false;
         OnUnlock += () => print("Unlocked " + upgradeName);
-        OnUnlock += () => GameManager.instance.SaveGame();
+    }
+    public virtual void Start()
+    {
+        OnUnlock += () => GameManager.SaveGame();
     }
     public virtual void Unlock()
     {

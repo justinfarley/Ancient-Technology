@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2783654284044500663}
   - component: {fileID: 2783654284044500662}
   - component: {fileID: 2783654284044500661}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: DialogueCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -112,10 +112,10 @@ GameObject:
   - component: {fileID: 2783654284071515505}
   - component: {fileID: 2783654284071515504}
   - component: {fileID: 2783654284071515506}
-  - component: {fileID: 5321664014448111687}
   - component: {fileID: 3959804869796853576}
-  - component: {fileID: 8917623140255218129}
-  m_Layer: 0
+  - component: {fileID: 3396747973649195259}
+  - component: {fileID: 9167506118263419347}
+  m_Layer: 16
   m_Name: Roger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -202,6 +202,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0c9811d2711ba5479cbe0341c0f5674, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isDoneDialogue: 0
   timeBetweenLetters: 0.05
   timeBetweenWords: 0.25
   timeBetweenSentences: 1
@@ -211,32 +212,6 @@ MonoBehaviour:
   triggerType: 0
   gauntlet: {fileID: 0}
   player: {fileID: 0}
---- !u!61 &5321664014448111687
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2783654284071514767}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0.25249004, y: 0.15576902}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.64, y: 0.64}
-    newSize: {x: 0.32, y: 0.32}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 0.2155473, y: 0.63153803}
-  m_EdgeRadius: 0
 --- !u!61 &3959804869796853576
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -244,13 +219,13 @@ BoxCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2783654284071514767}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.00069630146, y: 0}
+  m_Offset: {x: 0.0009289235, y: 0.0024372488}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -261,9 +236,9 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.15985373, y: 0.15846157}
+  m_Size: {x: 0.31908783, y: 0.31607047}
   m_EdgeRadius: 0
---- !u!61 &8917623140255218129
+--- !u!61 &3396747973649195259
 BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -276,7 +251,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.2389211, y: 0.15723756}
+  m_Offset: {x: 0.26233158, y: 0.15576902}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -287,7 +262,33 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.21939808, y: 0.63447523}
+  m_Size: {x: 0.017111719, y: 0.63153803}
+  m_EdgeRadius: 0
+--- !u!61 &9167506118263419347
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2783654284071514767}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.30960578, y: 0.15723756}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 0.64, y: 0.64}
+    newSize: {x: 0.32, y: 0.32}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.015455842, y: 0.63447523}
   m_EdgeRadius: 0
 --- !u!1 &2783654285137594512
 GameObject:
@@ -300,7 +301,7 @@ GameObject:
   - component: {fileID: 2783654285137594513}
   - component: {fileID: 2783654285137594515}
   - component: {fileID: 2783654285137594514}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: DialogueText
   m_TagString: Untagged
   m_Icon: {fileID: 0}

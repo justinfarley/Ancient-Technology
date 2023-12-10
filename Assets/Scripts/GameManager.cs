@@ -21,13 +21,15 @@ public class GameManager : MonoBehaviour
         {
             Destroy(this);
         }
-        if(SaveSystem.HasData())
-            LoadGame();
+        print("LOADING");
+        LoadGame();
+        print(instance.hasTeleport);
     }
     private void OnLevelWasLoaded(int level)
     {
+        LoadGame();
         if(level > bestLevel)
-            bestLevel = level;
+            instance.bestLevel = level;
         SaveGame();
     }
     private void Update()
@@ -38,31 +40,32 @@ public class GameManager : MonoBehaviour
         }
         else if (Input.GetKeyDown(KeyCode.LeftBracket))
         {
-            instance.SaveGame();
+            GameManager.SaveGame();
         }
     }
-    public void DeleteData()
+    public static void DeleteData()
     {
         SaveSystem.DeleteAllData();
-        bestLevel = 0;
-        hasTeleport = false;
-        hasCamo = false;
-        hasTimeSlow = false;
-        hasAttack = false;
+        instance.bestLevel = 0;
+        instance.hasTeleport = false;
+        instance.hasCamo = false;
+        instance.hasTimeSlow = false;
+        instance.hasAttack = false;
     }
-    public void SaveGame()
+    public static void SaveGame()
     {
         SaveSystem.SaveData();
     }
-    public SaveData LoadGame()
+    public static SaveData LoadGame()
     {
+        if (!SaveSystem.HasData()) return null;
         SaveData loadedData = SaveSystem.LoadData();
         if (loadedData == null) return null;
-        hasTeleport = loadedData.hasTeleport;
-        hasCamo = loadedData.hasCamo;
-        hasTimeSlow = loadedData.hasTimeSlow;
-        hasAttack = loadedData.hasAttack;
-        bestLevel = loadedData.bestLevel;
+        instance.hasTeleport = loadedData.hasTeleport;
+        instance.hasCamo = loadedData.hasCamo;
+        instance.hasTimeSlow = loadedData.hasTimeSlow;
+        instance.hasAttack = loadedData.hasAttack;
+        instance.bestLevel = loadedData.bestLevel;
         OnLoadedGame?.Invoke();
         return loadedData;
     }

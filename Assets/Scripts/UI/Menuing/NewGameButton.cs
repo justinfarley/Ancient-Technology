@@ -46,9 +46,9 @@ public class NewGameButton : MonoBehaviour
     private void StartNewGame()
     {
         if (SaveSystem.HasData())
-            GameManager.instance.DeleteData();
-        GameManager.instance.SaveGame();
-        GameManager.instance.LoadGame();
+            GameManager.DeleteData();
+        GameManager.SaveGame();
+        GameManager.LoadGame();
         SceneManager.LoadScene(1);//load introduction
     }
     public void OnClicked()

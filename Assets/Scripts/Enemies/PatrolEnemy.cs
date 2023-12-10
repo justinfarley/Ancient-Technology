@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.Apple.ReplayKit;
 
 public class PatrolEnemy : Enemy
 {
@@ -10,6 +10,7 @@ public class PatrolEnemy : Enemy
     [SerializeField] private Transform endTransform;
     [Header("Patrol Enemy Properties")]
     [SerializeField] private float downTimeBetweenMovements, timeToMove, maxMoveSpeed;
+    [SerializeField] private Sprite rightFacingSprite, leftFacingSprite;
     private Vector2 startPos, endPos;
     private SpriteRenderer spriteRenderer;
     protected override void Start()
@@ -51,6 +52,7 @@ public class PatrolEnemy : Enemy
     private IEnumerator Patrol_cr(Vector2 start, Vector2 end, float waitTime)
     {
         yield return new WaitForSeconds(waitTime);
+        animator.enabled = true;
         isFacingRight = !isFacingRight;
         spriteRenderer.flipX = !isFacingRight;
         animator.SetInteger("Horizontal", 1);
@@ -66,6 +68,8 @@ public class PatrolEnemy : Enemy
             }
         }
         animator.SetInteger("Horizontal", 0);
+        animator.enabled = false;
+        GetComponent<SpriteRenderer>().sprite = rightFacingSprite;
         yield return new WaitForSeconds(downTimeBetweenMovements);
         StartCoroutine(Patrol_cr(end, start, 0));
     }

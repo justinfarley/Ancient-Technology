@@ -9,20 +9,18 @@ using Unity.VisualScripting;
 public class DialogueLooper : MonoBehaviour
 {
     protected TMP_Text dialogueText;
-    protected bool isDoneDialogue = false;
+    public bool isDoneDialogue = false;
     [SerializeField] private float timeBetweenLetters, timeBetweenWords, timeBetweenSentences, speedMultiplier, timeBetweenScripts;
-    [SerializeField] private List<int> scriptsToRead;
+    public List<int> scriptsToRead;
     /// <summary>
     /// The respective action will get invoked when the key script is done running
     /// </summary>
-    public static Dictionary<int, Action> scriptToActionMappings = new Dictionary<int, Action>()
+    public static Dictionary<int, Action> scriptToActionMappings = new Dictionary<int, Action>();
+    public void TriggerDialogue(Dictionary<int, Func<bool>> actionToWaitForAfterScript, bool leaveText)
     {
-
-    };
-    protected void TriggerDialogue()
-    {
+        if (scriptsToRead.Count <= 0) return;
         DialogueReader.Pair dialogueParts = DialogueReader.GetScript(scriptsToRead[0]);
-        StartCoroutine(TriggerDialogue_cr(dialogueParts));
+        StartCoroutine(TriggerDialogue_cr(dialogueParts, actionToWaitForAfterScript,leaveText));
     }
     private void AddText(StringBuilder builder, string text)
     {
@@ -52,7 +50,7 @@ public class DialogueLooper : MonoBehaviour
             yield return new WaitForSeconds(timeBetweenWords * speedMultiplier);
         }
     }
-    private IEnumerator TriggerDialogue_cr(DialogueReader.Pair pair)
+    private IEnumerator TriggerDialogue_cr(DialogueReader.Pair pair, Dictionary<int, Func<bool>> actionToWaitForAfterScript, bool leaveText)
     {
         StringBuilder builder = new StringBuilder();
         ResetText(ref builder);
@@ -69,7 +67,7 @@ public class DialogueLooper : MonoBehaviour
         if (scriptsToRead.Count > 0)
         {
             foreach (int v in DialogueReader.GetScripts().Keys){
-                if (pair.EqualTo(DialogueReader.GetScripts()[v]))
+                if (pair.GetIndex() == v)
                 {
                     if (scriptToActionMappings.ContainsKey(v))
                     {
@@ -78,15 +76,38 @@ public class DialogueLooper : MonoBehaviour
                 }
             }
             print(scriptsToRead.Count);
-            for(int i = 1; i < scriptsToRead.Count; i++)
+            for (int i = 1; i < scriptsToRead.Count; i++)
             {
-                int v = scriptsToRead[i];
+                int v = scriptsToRead[i - 1];
+                int s = scriptsToRead[i];
                 scriptsToRead.Remove(v);
                 print(scriptsToRead.Count);
-                yield return new WaitForSeconds(timeBetweenScripts);
-                yield return StartCoroutine(TriggerDialogue_cr(DialogueReader.GetScripts()[v]));
+                if (actionToWaitForAfterScript != null && actionToWaitForAfterScript.ContainsKey(v))
+                {
+                    yield return new WaitUntil(actionToWaitForAfterScript[v]);
+                }
+                else
+                {
+                    yield return new WaitForSeconds(timeBetweenScripts);
+                }
+                yield return StartCoroutine(TriggerDialogue_cr(DialogueReader.GetScripts()[s], actionToWaitForAfterScript, leaveText));
             }
-            scriptsToRead.Clear();
+            print(scriptsToRead.Count);
+            if (scriptsToRead.Count > 0)
+            {
+                int val = scriptsToRead[0];
+                if (actionToWaitForAfterScript != null && actionToWaitForAfterScript.ContainsKey(val))
+                {
+                    yield return new WaitUntil(actionToWaitForAfterScript[val]);
+                }
+                else
+                {
+                    yield return new WaitForSeconds(timeBetweenScripts);
+                }
+                scriptsToRead.Clear();
+            }
+            if(!leaveText)
+                dialogueText.text = "";
         }
         foreach (int v in DialogueReader.GetScripts().Keys)
         {

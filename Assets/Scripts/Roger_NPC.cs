@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
 using TMPro;
+using UnityEditor.Build;
 using UnityEngine;
 
 public class Roger_NPC : DialogueLooper
@@ -13,22 +14,25 @@ public class Roger_NPC : DialogueLooper
         OnTriggerEnter,
         OnTriggerExit,
         Script,
+        OnScreen,
     }
     [SerializeField] private TriggerType triggerType;
     [SerializeField] private GameObject gauntlet;
     [SerializeField] private GameObject player;
-    [Header("Defines Which Script to read")]
     private bool wasTriggered = false;
+    private bool leaveDialogueText = true;
     void Start()
     {
+        scriptToActionMappings = new Dictionary<int, Action>();
         dialogueText = GetComponentInChildren<TMP_Text>();
         dialogueText.text = "";
         //TriggerDialogue(0, '.');
-        scriptToActionMappings.Add(2, () =>
+        AddScriptMapping(2, () =>
         {
             if (FindObjectOfType<PlayerUnlockManager>().GetTeleport().IsLocked())
                 PlayerUnlockManager.UnlockAbility(FindObjectOfType<PlayerUnlockManager>().GetTeleport());
         });
+        AddScriptMapping(1, SpawnGauntlet);
 
     }
 
@@ -37,8 +41,20 @@ public class Roger_NPC : DialogueLooper
         LookAtPlayer();
         if(wasTriggered && isDoneDialogue)
         {
-            print("done dialogue");
+            //print("done dialogue");
         }
+    }
+    private void AddScriptMapping(int index, Action a)
+    {
+        if(!scriptToActionMappings.ContainsKey(index))
+        {
+            scriptToActionMappings.Add(index, a);
+        }
+    }
+    private void OnBecameVisible()
+    {
+        if(triggerType == TriggerType.OnScreen)
+        TriggerDialogue(null, leaveDialogueText);
     }
     //
     public void UnlockCorrespondingAbility()
@@ -69,19 +85,19 @@ public class Roger_NPC : DialogueLooper
         {
             if(triggerType == TriggerType.OnTriggerEnter)
             {
-                TriggerDialogue();
+                TriggerDialogue(null, leaveDialogueText);
             }
         }
     }
-    public new void TriggerDialogue()
+    public new void TriggerDialogue(Dictionary<int, Func<bool>> waitUntilDict, bool leaveText)
     {
         if (wasTriggered) return;
-        base.TriggerDialogue();
+        base.TriggerDialogue(waitUntilDict, leaveText);
         wasTriggered = true;
     }
     public void TriggerBeginningDialogue()
     {
-        TriggerDialogue();
+        TriggerDialogue(null, leaveDialogueText);
     }
     public void SpawnGauntlet()
     {

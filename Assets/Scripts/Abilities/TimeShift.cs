@@ -20,16 +20,22 @@ public class TimeShift : Ability
     [SerializeField] private TMP_Text timerText, timeScaleText;
     [SerializeField] private KeyCode increaseTimeScaleKey, decreaseTimeScaleKey, maxTimeScaleKey, minTimeScaleKey;
     private readonly float timeIncrement = 0.1f, minTimeScale = 0.1f, maxTimeScale = 2f, abilityDuration = 15f;
-    public override void Start()
+    public override void Awake()
     {
-        base.Start();
+        base.Awake();
         abilityIconOverlayImg = abilityIcon.transform.GetChild(0).GetComponent<Image>();
         ogColor = abilityIconOverlayImg.color;
         OnUnlock += () =>
         {
             type = Type.ColorOnly;
+            locked = false;
             GameManager.instance.HasTimeSlow = true;
         };
+
+    }
+    public override void Start()
+    {
+        base.Start();
         if (GameManager.instance.HasTimeSlow)
         {
             Unlock();

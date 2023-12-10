@@ -1,8 +1,10 @@
+using JetBrains.Annotations;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Text.RegularExpressions;
+using Unity.VisualScripting;
 using UnityEngine;
 
 /// <summary>
@@ -20,10 +22,12 @@ public static class DialogueReader
     {
         private readonly char x;
         private readonly string[] y;
-        public Pair(char x, string[] y)
+        private readonly int index;
+        public Pair(int index, char x, string[] y)
         {
             this.y = new string[y.Length];
             this.x = x;
+            this.index = index;
             for (int i = 0; i < y.Length; i++)
             {
                 this.y[i] = y[i];
@@ -53,6 +57,10 @@ public static class DialogueReader
         {
             return y;
         }
+        public int GetIndex()
+        {
+            return index;
+        }
         public override string ToString()
         {
             return GetX() + ", " + GetY();
@@ -73,7 +81,7 @@ public static class DialogueReader
             parts[0] = parts[0].Replace(";", ";#");
             parts[0] = parts[0].Replace(":", ":#");
             string[] scriptParts = Regex.Split(parts[0], "#");
-            Pair pair = new Pair(parts[1][0], scriptParts);
+            Pair pair = new Pair(int.Parse(parts[1][^1] + ""), parts[1][0], scriptParts);
             Debug.Log(pair);
             ret.Add(int.Parse(parts[1][^1] + ""), pair);
         }

@@ -13,6 +13,7 @@ public class PlayerMovement : CollidableObject
     private float x;
     private Vector2 moveForce;
     private float jumpDelay = 0f;
+    public bool AbilitiesDisabled { get; set; }
     private void Start()
     {
         animator = GetComponent<Animator>();
@@ -29,7 +30,7 @@ public class PlayerMovement : CollidableObject
         float x = Mathf.Clamp(vector.x, minH, maxH);
         float y = Mathf.Clamp(vector.y, minV, maxV);
         return new Vector2(x, y);
-    }
+    }   
     private void Update()
     {
         if(Input.GetKeyDown(KeyCode.Space)) 
@@ -37,6 +38,15 @@ public class PlayerMovement : CollidableObject
             HandleJump();
         }
         HandleSpriteFlipping();
+        if (AbilitiesDisabled)
+        {
+            AbilitiesDisabled = false;
+            foreach(var v in GetComponents<Ability>())
+            {
+                v.enabled = false;
+            }
+            Time.timeScale = 1;
+        }
     }
     private void HandleMovement()
     {
@@ -76,9 +86,11 @@ public class PlayerMovement : CollidableObject
     }
     public bool IsGrounded()
     {
-        Collider2D hit = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, ~groundCheckIgnoreLayers);
-        if(hit == null) return false;
-        if(hit.gameObject.GetComponent<Ground>()) return true;
+        Collider2D[] hits = Physics2D.OverlapCircleAll(groundCheck.position, groundCheckRadius, ~groundCheckIgnoreLayers);
+        foreach (Collider2D col in hits)
+        {
+            if (col.gameObject.GetComponent<Ground>()) return true;
+        }
         return false;
     }
     private void Jump()

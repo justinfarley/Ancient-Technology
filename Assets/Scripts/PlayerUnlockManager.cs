@@ -20,7 +20,6 @@ public class PlayerUnlockManager : MonoBehaviour
         teleportAbility = player.GetComponent<Teleport>();
         camoAbility = player.GetComponent<Camo>();
         timeShiftAbility = player.GetComponent<TimeShift>();
-
         if (GameManager.instance.HasTeleport) UnlockAbility(teleportAbility);
         if (GameManager.instance.HasCamo) UnlockAbility(camoAbility);
         if (GameManager.instance.HasTimeSlow) UnlockAbility(timeShiftAbility);

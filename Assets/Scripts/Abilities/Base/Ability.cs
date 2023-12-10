@@ -36,7 +36,7 @@ public abstract class Ability : Unlockable
         ColorOnly,
         Both
     }
-    private void Awake()
+    public override void Awake()
     {
         abilityUIIcon = abilityIcon.transform.GetChild(0).gameObject;
         abilityIconOverlayImg = abilityIcon.transform.GetChild(1).GetComponent<Image>();
@@ -175,7 +175,7 @@ public abstract class Ability : Unlockable
         else
             ResetToWhite();
     }
-    protected void ResetToWhite()
+    public void ResetToWhite()
     {
         colorList.Clear();
         spriteRenderer.color = Color.white;

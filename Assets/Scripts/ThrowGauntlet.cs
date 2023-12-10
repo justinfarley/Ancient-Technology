@@ -9,6 +9,6 @@ public class ThrowGauntlet : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        rb.AddForce(new Vector2(-0.2f, 1) * force, ForceMode2D.Impulse);
+        rb.AddForce(new Vector2(-0.4f, 1) * force, ForceMode2D.Impulse);
     }
 }

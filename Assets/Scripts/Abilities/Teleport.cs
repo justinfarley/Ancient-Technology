@@ -18,16 +18,21 @@ public class Teleport : Ability
     [SerializeField] private GameObject effect;
     private LineRenderer lineRenderer;
 
+    public override void Awake()
+    {
+        base.Awake();
+        OnUnlock += () =>
+        {
+            type = Type.Both;
+            locked = false;
+            GameManager.instance.HasTeleport = true;
+        };
+    }
     public override void Start()
     {
         base.Start();
         lineRenderer = GetComponent<LineRenderer>();
         lineRenderer.enabled = false;
-        OnUnlock += () =>
-        {
-            type = Type.Both;
-            GameManager.instance.HasTeleport = true;
-        };
         if (GameManager.instance.HasTeleport)
         {
             Unlock();

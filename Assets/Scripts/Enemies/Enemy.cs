@@ -18,13 +18,16 @@ public class Enemy : CollidableObject
     [SerializeField] protected float sightRange;
     [SerializeField] protected float moveSpeed;
     [SerializeField] private GameObject noticedPopup;
+    public FieldOfView fov;
     protected Animator animator;
     protected float health;
     protected Action OnDamageTaken;
-    protected bool noticedPlayer = false, isFacingRight = true;
+    protected bool noticedPlayer = false;
+    public bool isFacingRight = true;
     private PlayerMovement player;
     protected Action OnNoticedPlayer;
     private const string KILL_PLAYER = "KillPlayer";
+
 
     protected virtual void Start()
     {
@@ -38,10 +41,13 @@ public class Enemy : CollidableObject
         OnDamageTaken += DamageTaken;
         OnNoticedPlayer += Noticed;
     }
+
+
     protected virtual void Update()
     {
-        if (IsPlayerInSightDistance() && IsEnemyFacingTowardsPlayer() && !noticedPlayer)
+        if (fov.IsPlayerInView() && IsEnemyFacingTowardsPlayer() && !noticedPlayer)
         {
+            print("SEEND");
             NoticedPlayer();
         }
         if (Input.GetKeyDown(KeyCode.V))
@@ -78,14 +84,6 @@ public class Enemy : CollidableObject
         }
         //-----------------------------------------------------------------
         OnNoticedPlayer?.Invoke();
-    }
-
-    private bool IsPlayerInSightDistance()
-    {
-        float xDistFromPlayer = Mathf.Abs(player.transform.position.x - transform.position.x);
-        float yDistFromPlayer = Mathf.Abs(player.transform.position.y - transform.position.y);
-        Debug.DrawRay(gameObject.transform.position, new Vector2(xDistFromPlayer, 2*yDistFromPlayer / 3));
-        return xDistFromPlayer <= sightRange && yDistFromPlayer <= 2*sightRange / 3;
     }
     private bool IsEnemyFacingTowardsPlayer()
     {
@@ -129,5 +127,20 @@ public class Enemy : CollidableObject
     protected virtual void Die()
     {
 
+    }
+    public struct ViewCastInfo
+    {
+        public bool hit;
+        public Vector3 point;
+        public float dist;
+        public float angle;
+
+        public ViewCastInfo(bool b, Vector3 p, float d, float a)
+        {
+            hit = b;
+            point = p; 
+            dist = d;
+            angle = a;
+        }
     }
 }

@@ -8,14 +8,20 @@ public class Camo : Ability
     private float chargeTime = 0f;
     private bool isInvisible = false;
 
-    public override void Start()
+    public override void Awake()
     {
-        base.Start();
+        base.Awake();
         OnUnlock += () =>
         {
             type = Type.Both;
+            locked = false;
             GameManager.instance.HasCamo = true;
         };
+
+    }
+    public override void Start()
+    {
+        base.Start();
         if (GameManager.instance.HasCamo)
         {
             Unlock();
