@@ -13,7 +13,7 @@ public class PlayerUnlockManager : MonoBehaviour
     private Camo camoAbility;
     private TimeShift timeShiftAbility;
     //private Attack attackAbility;
-    //TODO: add restof abilities here
+    //add restof abilities here
     private void Start()
     {
         player = FindObjectOfType<PlayerMovement>();

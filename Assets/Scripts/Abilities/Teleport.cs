@@ -101,7 +101,7 @@ public class Teleport : Ability
 
     public override void AbilityKeyHeld()
     {
-        //TODO: Show radius, make ability useable
+        //Show radius, make ability useable
         if(!radius.gameObject.activeSelf)
             radius.gameObject.SetActive(true);
         if (!lineRenderer.enabled)
@@ -111,9 +111,7 @@ public class Teleport : Ability
     public override void AbilityKeyUp()
     {
         base.AbilityKeyUp();
-        //TODO: Hide radius
         if (!CanUseAbility()) return;
-
         ResetToLastColor(eyeColor);
         activated = false;
         if (radius.gameObject.activeSelf)

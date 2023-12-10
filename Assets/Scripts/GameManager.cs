@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using System;
 
+//TODO: moving platforms, put enemies on moving platforms (static and patrol) and also refactor patrol code to use rigidbody instead of position (so that when the moving platform moves down or left or whatever it moves the enemy too)
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;

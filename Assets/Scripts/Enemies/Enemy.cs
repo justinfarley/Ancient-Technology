@@ -23,6 +23,7 @@ public class Enemy : CollidableObject
     protected float health;
     protected Action OnDamageTaken;
     protected bool noticedPlayer = false;
+    [HideInInspector]
     public bool isFacingRight = true;
     private PlayerMovement player;
     protected Action OnNoticedPlayer;

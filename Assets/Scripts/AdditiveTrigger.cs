@@ -19,7 +19,8 @@ public class AdditiveTrigger : MonoBehaviour
                 looperToAddTo.scriptsToRead.Add(v);
             }
             print(looperToAddTo.isDoneDialogue);
-            looperToAddTo.scriptsToRead.RemoveAt(0);
+            if(!looperToAddTo.isDoneDialogue)
+                looperToAddTo.scriptsToRead.RemoveAt(0);
             looperToAddTo.StopAllCoroutines();
             looperToAddTo.TriggerDialogue(null, leaveText);
         }

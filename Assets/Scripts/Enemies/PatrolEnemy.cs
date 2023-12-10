@@ -5,20 +5,15 @@ using UnityEngine.Apple.ReplayKit;
 
 public class PatrolEnemy : Enemy
 {
-    [Header("Start and End points for the patrol path")]
-    [SerializeField] private Transform startTransform;
-    [SerializeField] private Transform endTransform;
     [Header("Patrol Enemy Properties")]
-    [SerializeField] private float downTimeBetweenMovements, timeToMove, maxMoveSpeed;
-    [SerializeField] private Sprite rightFacingSprite, leftFacingSprite;
-    private Vector2 startPos, endPos;
+    [SerializeField] private float downTimeBetweenMovements, waitTime, moveForTime;
+    [SerializeField] private Sprite rightFacingSprite;
     private SpriteRenderer spriteRenderer;
+    private Vector2 graphicSphere1, graphicSphere2;
     protected override void Start()
     {
         base.Start();
         spriteRenderer = GetComponent<SpriteRenderer>();
-        startPos = startTransform.position;
-        endPos = endTransform.position;
         DialogueReader.Pair script1 = DialogueReader.GetScript(0);
         foreach(var s in script1.GetY())
         {
@@ -28,7 +23,7 @@ public class PatrolEnemy : Enemy
         {
             //kill player;
         };
-        Patrol(0);
+        Patrol(waitTime);
     }
     protected override void Update()
     {
@@ -36,51 +31,63 @@ public class PatrolEnemy : Enemy
     }
     private void FixedUpdate()
     {
-        ClampVelocity();
-    }
-    private void ClampVelocity()
-    {
-        Vector2 moveVector = _rb.velocity;
-        moveVector.x = Mathf.Clamp(moveVector.x, -maxMoveSpeed, maxMoveSpeed);
-        _rb.velocity = moveVector;
+
     }
 
     private void Patrol(float waitTime)
     {
-        StartCoroutine(Patrol_cr(startPos, endPos, waitTime));
+        StartCoroutine(Patrol_cr(waitTime));
     }
-    private IEnumerator Patrol_cr(Vector2 start, Vector2 end, float waitTime)
+    private IEnumerator Patrol_cr(float waitTime)
     {
         yield return new WaitForSeconds(waitTime);
         animator.enabled = true;
         isFacingRight = !isFacingRight;
         spriteRenderer.flipX = !isFacingRight;
         animator.SetInteger("Horizontal", 1);
-        for(float f = 0; f < timeToMove; f += (Time.deltaTime * moveSpeed))
+
+        for (float i = 0; i <= moveForTime; i += Time.deltaTime)
         {
+            _rb.velocity = new Vector2(isFacingRight ? moveSpeed : -moveSpeed, _rb.velocity.y);
+            yield return null;
+        }
+        _rb.velocity = new Vector2(isFacingRight ? moveSpeed : -moveSpeed, _rb.velocity.y);
+        yield return null;
+        _rb.velocity = Vector2.zero;
+        animator.SetInteger("Horizontal", 0);
+        animator.enabled = false;
+        GetComponent<SpriteRenderer>().sprite = rightFacingSprite;
+        yield return new WaitForSeconds(downTimeBetweenMovements);
+        StartCoroutine(Patrol_cr(waitTime));
+    }
+    private void OnDrawGizmos()
+    {
+        graphicSphere1 = transform.position;
+        float dist = moveSpeed * moveForTime;
+        print(dist);
+        graphicSphere2 = new Vector2(startFacingRight ? (graphicSphere1.x + dist + (moveSpeed / 10 / moveForTime) - 1) : (graphicSphere1.x - dist - (moveSpeed / 10 / moveForTime) + 1), transform.position.y);
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireSphere(graphicSphere1, 0.2f);
+        Gizmos.DrawWireSphere(graphicSphere2, 0.2f);
+        Gizmos.color = Color.red;
+        Gizmos.DrawLine(graphicSphere1, graphicSphere2);
+    }
+
+    /*  for(float f = 0; f < timeToMove; f += (Time.deltaTime * moveSpeed))
+        {
+            //lerp the x value only
             float elapsed = f / timeToMove;
-            _rb.MovePosition(Vector2.Lerp(start, end, elapsed));
+            float x = Mathf.Lerp(start.x, end.x, elapsed);
+            Vector3 rbV = _rb.position;
+            rbV.x = x;
+            rbV.y -= Physics2D.gravity.y;
+            _rb.MovePosition(rbV);
+            //_rb.MovePosition(new Vector2(x, _rb.position.y));
             //_rb.AddForce(speed * Time.fixedDeltaTime * dir, ForceMode2D.Impulse);
             yield return null;
             if (Vector2.Distance(transform.position, end) <= 0.001f)
             {
                 break;
             }
-        }
-        animator.SetInteger("Horizontal", 0);
-        animator.enabled = false;
-        GetComponent<SpriteRenderer>().sprite = rightFacingSprite;
-        yield return new WaitForSeconds(downTimeBetweenMovements);
-        StartCoroutine(Patrol_cr(end, start, 0));
-    }
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.green;
-        Gizmos.DrawWireSphere(startPos, 0.2f);
-        Gizmos.DrawWireSphere(endPos, 0.2f);
-        Gizmos.color = Color.red;
-        Gizmos.DrawLine(startPos, endPos);
-        Gizmos.color = Color.cyan;
-        Gizmos.DrawWireSphere(transform.position, sightRange);
-    }
+        }*/
 }

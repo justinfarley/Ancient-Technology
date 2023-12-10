@@ -23,7 +23,6 @@ public class FieldOfView : MonoBehaviour
         {
             Transform target = targetsInView[i].transform;
             Vector2 dirToTarget = (target.position - transform.position).normalized;
-            //TODO: CHANGE THIS EVERYWHERE
             float angle = Vector2.Angle(transform.right, dirToTarget);
             if ((enemy.isFacingRight && angle < viewAngle / 2) ||
                 (!enemy.isFacingRight && angle > (180 - viewAngle / 2)))
