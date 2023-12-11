@@ -4,7 +4,10 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using System;
 
+//TODO: make goal: travelling through the temple for ???? to save what ??? to accomplish what ???
 //TODO: moving platforms, put enemies on moving platforms (static and patrol) and also refactor patrol code to use rigidbody instead of position (so that when the moving platform moves down or left or whatever it moves the enemy too)
+//TODO: maybe some enemies detect you easily if you jump / if you teleport near them etc.
+//TODO: maybe the ones that can detect your jumps have a yellow aura around them (their radius) teleport detectors are blue etc maybe
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;

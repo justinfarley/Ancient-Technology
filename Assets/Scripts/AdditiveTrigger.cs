@@ -1,4 +1,5 @@
 using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -19,8 +20,14 @@ public class AdditiveTrigger : MonoBehaviour
                 looperToAddTo.scriptsToRead.Add(v);
             }
             print(looperToAddTo.isDoneDialogue);
-            if(!looperToAddTo.isDoneDialogue)
-                looperToAddTo.scriptsToRead.RemoveAt(0);
+            try
+            {
+                if (!looperToAddTo.isDoneDialogue)
+                    looperToAddTo.scriptsToRead.RemoveAt(0);
+            }catch(Exception)
+            {
+                Debug.LogError("Make sure to toggle the \"isDoneDialogue\" option in the DialogueReader being modified");
+            }
             looperToAddTo.StopAllCoroutines();
             looperToAddTo.TriggerDialogue(null, leaveText);
         }

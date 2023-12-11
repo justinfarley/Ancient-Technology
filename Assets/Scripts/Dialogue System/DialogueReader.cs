@@ -81,9 +81,9 @@ public static class DialogueReader
             parts[0] = parts[0].Replace(";", ";#");
             parts[0] = parts[0].Replace(":", ":#");
             string[] scriptParts = Regex.Split(parts[0], "#");
-            Pair pair = new Pair(int.Parse(parts[1][^1] + ""), parts[1][0], scriptParts);
+            Pair pair = new Pair(int.Parse(parts[1].Substring(1)), parts[1][0], scriptParts);
             Debug.Log(pair);
-            ret.Add(int.Parse(parts[1][^1] + ""), pair);
+            ret.Add(int.Parse(parts[1].Substring(1)), pair);
         }
         return ret;
     }

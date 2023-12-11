@@ -5,6 +5,7 @@ using TMPro;
 using System.Text;
 using System;
 using Unity.VisualScripting;
+using System.Linq;
 
 public class DialogueLooper : MonoBehaviour
 {

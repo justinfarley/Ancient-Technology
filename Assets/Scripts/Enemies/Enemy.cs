@@ -15,7 +15,6 @@ public class Enemy : CollidableObject
 {
     [SerializeField] protected float maxHealth;
     [SerializeField] protected bool startFacingRight;
-    [SerializeField] protected float sightRange;
     [SerializeField] protected float moveSpeed;
     [SerializeField] private GameObject noticedPopup;
     public FieldOfView fov;

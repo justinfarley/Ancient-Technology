@@ -8,6 +8,7 @@ public class PatrolEnemy : Enemy
     [Header("Patrol Enemy Properties")]
     [SerializeField] private float downTimeBetweenMovements, waitTime, moveForTime;
     [SerializeField] private Sprite rightFacingSprite;
+    [SerializeField] private bool runner;
     private SpriteRenderer spriteRenderer;
     private Vector2 graphicSphere1, graphicSphere2;
     protected override void Start()
@@ -23,6 +24,7 @@ public class PatrolEnemy : Enemy
         {
             //kill player;
         };
+        animator.SetBool("isRunning", runner);
         Patrol(waitTime);
     }
     protected override void Update()
