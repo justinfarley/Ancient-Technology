@@ -266,6 +266,7 @@ MonoBehaviour:
   waitTime: 1
   moveForTime: 3
   rightFacingSprite: {fileID: 21300000, guid: 8387779da4f60d94b8313a4c3f075df8, type: 3}
+  runner: 0
 --- !u!95 &4868294265119321083
 Animator:
   serializedVersion: 4

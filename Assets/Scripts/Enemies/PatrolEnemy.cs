@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Apple.ReplayKit;
 
 public class PatrolEnemy : Enemy
 {
@@ -25,6 +24,7 @@ public class PatrolEnemy : Enemy
             //kill player;
         };
         animator.SetBool("isRunning", runner);
+
         Patrol(waitTime);
     }
     protected override void Update()
@@ -35,7 +35,24 @@ public class PatrolEnemy : Enemy
     {
 
     }
-
+    private void SwapFovPos()
+    {
+        if (runner)
+        {
+            Vector2 pos = fov.transform.localPosition;
+            pos.x = isFacingRight ? 0.2f : -0.2f;
+            fov.transform.localPosition = pos;
+        }
+    }
+    private void ResetFovPos()
+    {
+        if (runner)
+        {
+            Vector2 pos = fov.transform.localPosition;
+            pos.x = 0;
+            fov.transform.localPosition = pos;
+        }
+    }
     private void Patrol(float waitTime)
     {
         StartCoroutine(Patrol_cr(waitTime));
@@ -46,8 +63,8 @@ public class PatrolEnemy : Enemy
         animator.enabled = true;
         isFacingRight = !isFacingRight;
         spriteRenderer.flipX = !isFacingRight;
+        SwapFovPos();
         animator.SetInteger("Horizontal", 1);
-
         for (float i = 0; i <= moveForTime; i += Time.deltaTime)
         {
             _rb.velocity = new Vector2(isFacingRight ? moveSpeed : -moveSpeed, _rb.velocity.y);
@@ -59,6 +76,7 @@ public class PatrolEnemy : Enemy
         animator.SetInteger("Horizontal", 0);
         animator.enabled = false;
         GetComponent<SpriteRenderer>().sprite = rightFacingSprite;
+        ResetFovPos();
         yield return new WaitForSeconds(downTimeBetweenMovements);
         StartCoroutine(Patrol_cr(waitTime));
     }

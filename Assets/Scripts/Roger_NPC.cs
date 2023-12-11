@@ -1,9 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Reflection;
 using TMPro;
-using UnityEditor.Build;
 using UnityEngine;
 
 public class Roger_NPC : DialogueLooper
