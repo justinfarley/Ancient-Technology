@@ -74,15 +74,15 @@ public class Camo : Ability
         base.AbilityKeyUp();
         BecomeVisible();
     }
-    public override void OnActivation()
+    public override void AbilityKeyDown()
     {
-        base.OnActivation();
+        base.AbilityKeyDown();
     }
     public override bool CanUseAbility()
     {
         return base.CanUseAbility();
     }
-    protected override void ExhaustAbility()
+    public override void ExhaustAbility()
     {
         base.ExhaustAbility();
         isInvisible = false;

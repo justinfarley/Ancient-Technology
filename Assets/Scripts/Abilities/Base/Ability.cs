@@ -81,7 +81,7 @@ public abstract class Ability : Unlockable
         if (OnCooldown()) return;
         if (!activated && PressedActionButtonDown())
         {
-            OnActivation();
+            AbilityKeyDown();
             activated = true;
         }
         else if (PressedActionButtonDown())
@@ -93,7 +93,7 @@ public abstract class Ability : Unlockable
             AbilityKeyUp();
         }
     }
-    public virtual void OnActivation()
+    public virtual void AbilityKeyDown()
     {
         SetToEyeColor();
         SetIconOverlayColor(eyeColor);
@@ -129,7 +129,7 @@ public abstract class Ability : Unlockable
         abilityIconOverlayImg.color = ogColor;
         abilityIconOverlayImg.fillAmount = 0;
     }
-    protected virtual void ExhaustAbility()
+    public virtual void ExhaustAbility()
     {
         canUseAbility = false;
         activated = false;

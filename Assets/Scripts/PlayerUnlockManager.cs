@@ -12,7 +12,7 @@ public class PlayerUnlockManager : MonoBehaviour
     private Teleport teleportAbility;
     private Camo camoAbility;
     private TimeShift timeShiftAbility;
-    //private Attack attackAbility;
+    private Attack attackAbility;
     //add restof abilities here
     private void Start()
     {
@@ -20,9 +20,12 @@ public class PlayerUnlockManager : MonoBehaviour
         teleportAbility = player.GetComponent<Teleport>();
         camoAbility = player.GetComponent<Camo>();
         timeShiftAbility = player.GetComponent<TimeShift>();
+        attackAbility = player.GetComponent<Attack>();
         if (GameManager.instance.HasTeleport) UnlockAbility(teleportAbility);
         if (GameManager.instance.HasCamo) UnlockAbility(camoAbility);
         if (GameManager.instance.HasTimeSlow) UnlockAbility(timeShiftAbility);
+        if (GameManager.instance.HasAttack) UnlockAbility(attackAbility);
+
         //StartCoroutine(UnlockAfterSeconds_cr(teleportAbility, 1));
         //StartCoroutine(UnlockAfterSeconds_cr(camoAbility, 1f));
         //StartCoroutine(UnlockAfterSeconds_cr(timeShiftAbility, 1f));
@@ -40,6 +43,10 @@ public class PlayerUnlockManager : MonoBehaviour
         else if (Input.GetKeyDown(KeyCode.Period))
         {
             UnlockAbility(timeShiftAbility);
+        }
+        else if (Input.GetKeyDown(KeyCode.Slash))
+        {
+            UnlockAbility(attackAbility);
         }
 
     }

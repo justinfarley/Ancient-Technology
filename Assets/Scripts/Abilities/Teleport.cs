@@ -120,7 +120,7 @@ public class Teleport : Ability
             lineRenderer.enabled = false;
         canUseAbility = false;
     }
-    protected override void ExhaustAbility()
+    public override void ExhaustAbility()
     {
         base.ExhaustAbility();
         radius.gameObject.SetActive(false);
@@ -132,8 +132,8 @@ public class Teleport : Ability
         //any other guard clauses to USE ability
         return true;
     }
-    public override void OnActivation()
+    public override void AbilityKeyDown()
     {
-        base.OnActivation();
+        base.AbilityKeyDown();
     }
 }

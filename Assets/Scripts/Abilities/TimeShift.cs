@@ -63,9 +63,9 @@ public class TimeShift : Ability
         }
         timeScaleText.text = Time.timeScale.ToString("F1") + "x";
     }
-    public override void OnActivation()
+    public override void AbilityKeyDown()
     {
-        base.OnActivation();
+        base.AbilityKeyDown();
         StartCoroutine(IncreaseTime_cr());
         Time.timeScale = 0.5f;
         Time.fixedDeltaTime = 0.02f * Time.timeScale;
@@ -90,7 +90,7 @@ public class TimeShift : Ability
             Time.fixedDeltaTime = 0.02f;
         Time.timeScale = Mathf.Clamp(Time.timeScale, minTimeScale, maxTimeScale);
     }
-    protected override void ExhaustAbility()
+    public override void ExhaustAbility()
     {
         slowedTime = false;
         Time.timeScale = 1f;

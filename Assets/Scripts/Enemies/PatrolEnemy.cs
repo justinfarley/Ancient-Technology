@@ -84,7 +84,6 @@ public class PatrolEnemy : Enemy
     {
         graphicSphere1 = transform.position;
         float dist = moveSpeed * moveForTime;
-        print(dist);
         graphicSphere2 = new Vector2(startFacingRight ? (graphicSphere1.x + dist + (moveSpeed / 10 / moveForTime) - 1) : (graphicSphere1.x - dist - (moveSpeed / 10 / moveForTime) + 1), transform.position.y);
         Gizmos.color = Color.green;
         Gizmos.DrawWireSphere(graphicSphere1, 0.2f);

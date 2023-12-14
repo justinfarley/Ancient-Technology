@@ -108,7 +108,7 @@ public class Enemy : CollidableObject
     public override void TriggerEnter(Collider2D collision)
     {
     }
-    protected virtual void TakeDamage(float damage)
+    public virtual void TakeDamage(float damage)
     {
         if (damage <= 0) return;
         health -= damage;
