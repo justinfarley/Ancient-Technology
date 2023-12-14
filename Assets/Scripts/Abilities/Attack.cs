@@ -69,16 +69,18 @@ public class Attack : Ability
         {
             spawnPos = lazerSpawnLeft.position;
             if(playerSR.GetComponent<PlayerMovement>().IsMoving())
-                spawnPos.x -= 0.3f;
+                spawnPos.x -= 0.5f;
         }
         else
         {
             spawnPos = lazerSpawnRight.position;
             if (playerSR.GetComponent<PlayerMovement>().IsMoving())
-                spawnPos.x += 0.3f;
+                spawnPos.x += 0.5f;
         }
         currentLazer = Instantiate(lazerPrefab, spawnPos, Quaternion.identity).GetComponent<Lazer>();
         currentLazer.Parent = this;
+        if (playerSR.flipX)
+            currentLazer.ShootingLeft = true;
     }
     public void SetCurrentLazer(Lazer lazer)
     {

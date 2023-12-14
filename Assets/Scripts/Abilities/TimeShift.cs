@@ -23,8 +23,7 @@ public class TimeShift : Ability
     public override void Awake()
     {
         base.Awake();
-        abilityIconOverlayImg = abilityIcon.transform.GetChild(0).GetComponent<Image>();
-        ogColor = abilityIconOverlayImg.color;
+        ogColor = abilityIcon.abilityOverlayImage.color;
         OnUnlock += () =>
         {
             type = Type.ColorOnly;
@@ -71,7 +70,7 @@ public class TimeShift : Ability
         Time.fixedDeltaTime = 0.02f * Time.timeScale;
         timeScaleText.gameObject.SetActive(true);
         timerText.gameObject.SetActive(true);
-        abilityIconOverlayImg.fillAmount = 1;
+        abilityIcon.abilityOverlayImage.fillAmount = 1;
     }
     private void IncreaseTime(float amount)
     {
@@ -97,7 +96,7 @@ public class TimeShift : Ability
         Time.fixedDeltaTime = 0.02f;
         timerText.gameObject.SetActive(false);
         timeScaleText.gameObject.SetActive(false);
-        abilityIconOverlayImg.fillAmount = 1;
+        abilityIcon.abilityOverlayImage.fillAmount = 1;
         base.ExhaustAbility();
     }
     public override void AbilityKeyHeld()
@@ -131,7 +130,7 @@ public class TimeShift : Ability
         for (float f = abilityDuration; f > 0; f -= Time.unscaledDeltaTime)
         {
             timerText.text = string.Format("{0:0.0}",f);
-            abilityIconOverlayImg.fillAmount = f / abilityDuration;
+            abilityIcon.abilityOverlayImage.fillAmount = f / abilityDuration;
             yield return null;
         }
         ExhaustAbility();

@@ -8,7 +8,7 @@ public abstract class AbstractAbilityIcon : MonoBehaviour
 {
     [SerializeField] protected GameObject player;
     protected Ability ability;
-    protected Image abilityIconImage, abilityOverlayImage;
+    public Image abilityIconImage, abilityOverlayImage;
     private Color disabledColor = new Color32(255, 127, 127, 255);
     private float iconSize = 150f;
 

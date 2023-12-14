@@ -8,11 +8,17 @@ public class Lazer : CollidableObject
     private Vector2 moveDir;
     public Attack Parent { get; set; }
     public float Damage { get; set; }
+    public bool ShootingLeft { get; set; }
     public override void CollisionEnter(Collision2D collision)
     {
+        print("hit something");
         if (collision.gameObject.GetComponent<Enemy>())
         {
             collision.gameObject.GetComponent<Enemy>().TakeDamage(Damage);
+        }
+        else if (collision.gameObject.GetComponent<CollidableObject>())
+        {
+            Destroy(gameObject);
         }
     }
     private void OnBecameInvisible()
@@ -25,10 +31,13 @@ public class Lazer : CollidableObject
     private void Start()
     {
         moveDir = new Vector2(speed, 0);
+        if (ShootingLeft)
+            moveDir.x *= -1;
     }
     private void Update()
     {
         transform.Translate(speed * Time.deltaTime * moveDir);
+        _rb.MovePosition(transform.position);
     }
     private void OnDestroy()
     {

@@ -85,8 +85,8 @@ public class PlayerMovement : CollidableObject
         spriteRenderer.flipX = false;
     }
     public bool IsMoving()
-    { 
-        //TODO: this next
+    {
+        if (Input.GetAxis("Horizontal") != 0) return true;
         return false;
     }
     public bool IsGrounded()

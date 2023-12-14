@@ -8,6 +8,7 @@ using System;
 //TODO: moving platforms, put enemies on moving platforms (static and patrol) and also refactor patrol code to use rigidbody instead of position (so that when the moving platform moves down or left or whatever it moves the enemy too)
 //TODO: maybe some enemies detect you easily if you jump / if you teleport near them etc.
 //TODO: maybe the ones that can detect your jumps have a yellow aura around them (their radius) teleport detectors are blue etc maybe
+//TODO: maybe drone that like flies above and has the sight cone on the bottom of it
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;

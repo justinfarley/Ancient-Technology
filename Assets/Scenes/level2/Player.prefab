@@ -163,6 +163,7 @@ GameObject:
   - component: {fileID: 750492395285956153}
   - component: {fileID: 750492395285956149}
   - component: {fileID: 750492395285956148}
+  - component: {fileID: 6814861917986359948}
   - component: {fileID: 750492395285956150}
   - component: {fileID: 750492395285956147}
   m_Layer: 10
@@ -373,6 +374,27 @@ MonoBehaviour:
   decreaseTimeScaleKey: 276
   maxTimeScaleKey: 273
   minTimeScaleKey: 274
+--- !u!114 &6814861917986359948
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 750492395285956157}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 912275e675bd054469a4cf74aa7c0a63, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  upgradeName: Attack
+  abilityCooldown: 0
+  abilityKeys: 43010000
+  abilityIcon: {fileID: 0}
+  eyeColor: {r: 0, g: 0, b: 0, a: 0}
+  lazerPrefab: {fileID: 5604224682460866498, guid: 22d3f4baa70b1b84985d7155e22a1a13,
+    type: 3}
+  lazerSpawnRight: {fileID: 0}
+  lazerSpawnLeft: {fileID: 0}
 --- !u!120 &750492395285956150
 LineRenderer:
   m_ObjectHideFlags: 0

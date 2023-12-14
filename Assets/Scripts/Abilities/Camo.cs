@@ -39,11 +39,11 @@ public class Camo : Ability
             return;
         }
         chargeTime += Time.deltaTime;
-        abilityIconOverlayImg.fillAmount = chargeTime / timeToUseAbility;
+        abilityIcon.abilityOverlayImage.fillAmount = chargeTime / timeToUseAbility;
         if (!GetComponent<PlayerMovement>().IsGrounded())
         {
             chargeTime = 0f;
-            abilityIconOverlayImg.fillAmount = chargeTime / timeToUseAbility;
+            abilityIcon.abilityOverlayImage.fillAmount = chargeTime / timeToUseAbility;
         }
         if (chargeTime >= timeToUseAbility)
         {
