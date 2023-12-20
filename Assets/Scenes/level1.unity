@@ -680,19 +680,6 @@ MonoBehaviour:
     m_DissipationDistance: 100
     m_PropagationSpeed: 343
   m_DefaultVelocity: {x: 0, y: 0, z: 0}
---- !u!114 &312530206
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 312530194}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5cd327649a45de04e94110522b3faa0b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  impulseSource: {fileID: 312530205}
 --- !u!1 &436664491
 GameObject:
   m_ObjectHideFlags: 0
@@ -2228,6 +2215,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 312530194}
+  abilityIconImage: {fileID: 203214570}
+  abilityOverlayImage: {fileID: 1241597880}
 --- !u!95 &1358333108
 Animator:
   serializedVersion: 4
@@ -2444,6 +2433,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 312530194}
+  abilityIconImage: {fileID: 0}
+  abilityOverlayImage: {fileID: 0}
 --- !u!222 &1448273985
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2693,6 +2684,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 312530194}
+  abilityIconImage: {fileID: 849565115}
+  abilityOverlayImage: {fileID: 40717327}
 --- !u!95 &1602532351
 Animator:
   serializedVersion: 4
@@ -3232,6 +3225,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 312530194}
+  abilityIconImage: {fileID: 436664493}
+  abilityOverlayImage: {fileID: 1858745867}
 --- !u!222 &2036575218
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -3558,6 +3553,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: LazerSpawnPos1
       objectReference: {fileID: 0}
+    - target: {fileID: 8643944295013951628, guid: 521ab985318e401479eee7c551b40499,
+        type: 3}
+      propertyPath: impulseSource
+      value: 
+      objectReference: {fileID: 312530205}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 521ab985318e401479eee7c551b40499, type: 3}
 --- !u!1001 &2780149916551483604
