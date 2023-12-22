@@ -12,7 +12,7 @@ public class AttackIcon : AbstractAbilityIcon
     protected override void Start()
     {
         base.Start();
-        if (!GameManager.instance.HasTimeSlow) abilityIconImage.gameObject.SetActive(false);
+        if (!GameManager.instance.HasAttack) abilityIconImage.gameObject.SetActive(false);
         else abilityIconImage.gameObject.SetActive(true);
     }
 }

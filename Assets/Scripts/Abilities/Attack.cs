@@ -44,9 +44,15 @@ public class Attack : Ability
     }
     public override void AbilityKeyDown()
     {
-        base.AbilityKeyDown();
-        if(CanShoot())
+        if (CanShoot())
+        {
+            base.AbilityKeyDown();
             SpawnLazer();
+        }
+        else
+        {
+            activated = false;
+        }
     }
     public override bool CanUseAbility()
     {
@@ -58,6 +64,12 @@ public class Attack : Ability
     }
     private bool CanShoot()
     {
+        //TODO: implement conditions
+        foreach(var key in GetComponent<Teleport>().GetAbilityKeys())
+        {
+            if (Input.GetKey(key)) return false;
+        }
+        if (!GameManager.instance.HasAttack) return false;
         return true;
     }
     private void SpawnLazer()
@@ -79,6 +91,7 @@ public class Attack : Ability
         }
         currentLazer = Instantiate(lazerPrefab, spawnPos, Quaternion.identity).GetComponent<Lazer>();
         currentLazer.Parent = this;
+        currentLazer.Damage = damage;
         if (playerSR.flipX)
             currentLazer.ShootingLeft = true;
     }

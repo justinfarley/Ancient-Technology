@@ -47,7 +47,6 @@ public class Enemy : CollidableObject
     {
         if (fov.IsPlayerInView() && IsEnemyFacingTowardsPlayer() && !noticedPlayer)
         {
-            print("SEEND");
             NoticedPlayer();
         }
         if (Input.GetKeyDown(KeyCode.V))
@@ -57,7 +56,6 @@ public class Enemy : CollidableObject
     }
     private void Noticed()
     {
-        print("NOTICED PLAYER!");
         noticedPlayer = true;
         StopAllCoroutines();
         noticedPopup.SetActive(true);
@@ -107,11 +105,13 @@ public class Enemy : CollidableObject
 
     public override void TriggerEnter(Collider2D collision)
     {
+
     }
     public virtual void TakeDamage(float damage)
     {
         if (damage <= 0) return;
         health -= damage;
+        //TODO: add blink and or freeze frame when an enemy takes damage
         if (health <= 0)
         {
             Die();
@@ -126,7 +126,9 @@ public class Enemy : CollidableObject
     }
     protected virtual void Die()
     {
-
+        print("ENEMY " + gameObject.name + " DIED.");
+        //TODO: add particles and such
+        Destroy(gameObject);
     }
     public struct ViewCastInfo
     {

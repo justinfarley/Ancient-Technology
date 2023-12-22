@@ -27,6 +27,10 @@ public class PatrolEnemy : Enemy
 
         Patrol(waitTime);
     }
+    public override void TakeDamage(float damage)
+    {
+        base.TakeDamage(damage);
+    }
     protected override void Update()
     {
         base.Update();

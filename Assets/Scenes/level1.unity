@@ -1254,6 +1254,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 308384788}
     m_Modifications:
+    - target: {fileID: 3161402662211100064, guid: 895bf4ef6daf5e3439ae14a7d24df014,
+        type: 3}
+      propertyPath: m_Mass
+      value: 753.8925
+      objectReference: {fileID: 0}
     - target: {fileID: 3161402662211100065, guid: 895bf4ef6daf5e3439ae14a7d24df014,
         type: 3}
       propertyPath: m_Size.x
@@ -1858,20 +1863,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 308384788}
     m_Modifications:
-    - target: {fileID: 3161402662211100065, guid: 895bf4ef6daf5e3439ae14a7d24df014,
+    - target: {fileID: 3161402662211100064, guid: 895bf4ef6daf5e3439ae14a7d24df014,
         type: 3}
-      propertyPath: m_Size.x
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 3161402662211100065, guid: 895bf4ef6daf5e3439ae14a7d24df014,
-        type: 3}
-      propertyPath: m_Size.y
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 3161402662211100065, guid: 895bf4ef6daf5e3439ae14a7d24df014,
-        type: 3}
-      propertyPath: m_AutoTiling
-      value: 1
+      propertyPath: m_Mass
+      value: 753.8925
       objectReference: {fileID: 0}
     - target: {fileID: 3161402662211100065, guid: 895bf4ef6daf5e3439ae14a7d24df014,
         type: 3}
@@ -2369,8 +2364,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1448273982}
   - component: {fileID: 1448273985}
-  - component: {fileID: 1448273984}
   - component: {fileID: 1448273983}
+  - component: {fileID: 1448273986}
   m_Layer: 5
   m_Name: AttackIcon
   m_TagString: Untagged
@@ -2420,21 +2415,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &1448273984
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1448273981}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 25585f12a6ce48c4a8a74ce66fcd7f43, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  player: {fileID: 312530194}
-  abilityIconImage: {fileID: 0}
-  abilityOverlayImage: {fileID: 0}
 --- !u!222 &1448273985
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2443,6 +2423,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1448273981}
   m_CullTransparentMesh: 1
+--- !u!114 &1448273986
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1448273981}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ae86e1d99093a44ebe98e779d6d0d80, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 312530194}
+  abilityIconImage: {fileID: 0}
+  abilityOverlayImage: {fileID: 0}
 --- !u!1001 &1569107112
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3547,7 +3542,7 @@ PrefabInstance:
         type: 3}
       propertyPath: abilityIcon
       value: 
-      objectReference: {fileID: 1448273984}
+      objectReference: {fileID: 1448273986}
     - target: {fileID: 2875587142270576308, guid: 521ab985318e401479eee7c551b40499,
         type: 3}
       propertyPath: m_Name
@@ -3641,6 +3636,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5266933573517459030, guid: 88d745d0da8e2874f8d318c09d3c6e33,
+        type: 3}
+      propertyPath: m_Mass
+      value: 41.675323
       objectReference: {fileID: 0}
     - target: {fileID: 5266933573517459031, guid: 88d745d0da8e2874f8d318c09d3c6e33,
         type: 3}

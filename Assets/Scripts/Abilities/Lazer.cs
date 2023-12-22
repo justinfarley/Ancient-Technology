@@ -11,13 +11,16 @@ public class Lazer : CollidableObject
     public bool ShootingLeft { get; set; }
     public override void CollisionEnter(Collision2D collision)
     {
+        print(collision.gameObject.GetComponent<CollidableObject>());
         print("hit something");
         if (collision.gameObject.GetComponent<Enemy>())
         {
             collision.gameObject.GetComponent<Enemy>().TakeDamage(Damage);
+            Destroy(gameObject);
         }
         else if (collision.gameObject.GetComponent<CollidableObject>())
         {
+            print("hello");
             Destroy(gameObject);
         }
     }

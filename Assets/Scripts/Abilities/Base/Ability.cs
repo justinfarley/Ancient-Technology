@@ -79,7 +79,6 @@ public abstract class Ability : Unlockable
         if (!activated && PressedActionButtonDown())
         {
             AbilityKeyDown();
-            activated = true;
         }
         else if (PressedActionButtonDown())
         {
@@ -92,6 +91,7 @@ public abstract class Ability : Unlockable
     }
     public virtual void AbilityKeyDown()
     {
+        activated = true;
         SetToEyeColor();
         SetIconOverlayColor(eyeColor);
     }
@@ -145,6 +145,10 @@ public abstract class Ability : Unlockable
         if (IsLocked()) return false;
         if (!canUseAbility) return false;
         return true;
+    }
+    public bool GetCanUseAbility()
+    {
+        return canUseAbility;
     }
     public bool OnCooldown()
     {

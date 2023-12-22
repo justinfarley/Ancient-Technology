@@ -8,14 +8,14 @@ public abstract class AbstractAbilityIcon : MonoBehaviour
 {
     [SerializeField] protected GameObject player;
     protected Ability ability;
+    [HideInInspector]
     public Image abilityIconImage, abilityOverlayImage;
     private Color disabledColor = new Color32(255, 127, 127, 255);
-    private float iconSize = 150f;
+    private const float ICON_SIZE = 150f;
 
     protected virtual void Awake()
     {
-        abilityIconImage = transform.GetChild(0).GetComponent<Image>();
-        abilityOverlayImage = transform.GetChild(1).GetComponent<Image>();
+        SetImageReferences();
         print(transform.GetChild(1).GetComponent<Image>().name);
     }
     protected virtual void Start()
@@ -28,6 +28,11 @@ public abstract class AbstractAbilityIcon : MonoBehaviour
     {
         abilityIconImage.color = Color.white;
         abilityOverlayImage.fillAmount = 0;
+    }
+    public void SetImageReferences()
+    {
+        abilityIconImage = transform.GetChild(0).GetComponent<Image>();
+        abilityOverlayImage = transform.GetChild(1).GetComponent<Image>();
     }
     public void OnCooldown(float t)
     {
@@ -45,7 +50,7 @@ public abstract class AbstractAbilityIcon : MonoBehaviour
     public void UnlockAnimationEvent()
     {
         GetComponent<Animator>().enabled = false;
-        GetComponent<RectTransform>().sizeDelta = new Vector2(iconSize, iconSize);
+        GetComponent<RectTransform>().sizeDelta = new Vector2(ICON_SIZE, ICON_SIZE);
         transform.localScale = new Vector3(1, 1, 1);
         
     }
