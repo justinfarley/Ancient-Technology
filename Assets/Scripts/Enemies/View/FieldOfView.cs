@@ -31,9 +31,12 @@ public class FieldOfView : MonoBehaviour
                 if (!Physics2D.Raycast(transform.position, dirToTarget, distToTarget, obstacleMask))
                 {
                     //is it a player
-                    print("found player");
-                    Debug.DrawLine(transform.position, target.position, Color.red);
-                    return true;
+                    if (target.GetComponent<PlayerMovement>())
+                    {
+                        print("found player");
+                        Debug.DrawLine(transform.position, target.position, Color.red);
+                        return true;
+                    }
                 }
             }
         }
