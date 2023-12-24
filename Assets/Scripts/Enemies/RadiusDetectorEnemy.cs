@@ -8,7 +8,7 @@ using UnityEngine;
 public class RadiusDetectorEnemy : Enemy
 {
     [SerializeField] private Detectable detectableType;
-    [SerializeField] private Sprite radiusSprite;
+    [SerializeField] private Sprite jumpDetectorSprite, teleportDetectorSprite, camoDectectorSprite, anyAbilityDetectedSprite;
     [SerializeField] private LayerMask playerMask;
     [SerializeField] private float radius;
     public enum Detectable
@@ -22,7 +22,14 @@ public class RadiusDetectorEnemy : Enemy
     {
         base.Start();
         SpriteRenderer sr = transform.GetChild(1).GetComponent<SpriteRenderer>();
-        sr.sprite = radiusSprite; //use radius sprite
+        sr.sprite = (detectableType) switch //use corresponding radius sprite based on Detectable type
+        {
+            Detectable.Jump => jumpDetectorSprite,
+            Detectable.Teleport => teleportDetectorSprite,
+            Detectable.Camo => camoDectectorSprite,
+            Detectable.AnyAbility => anyAbilityDetectedSprite,
+            _ => null
+        }; 
         sr.gameObject.transform.localScale = new Vector3(radius, radius, sr.gameObject.transform.localScale.z);
         isDetector = true;
     }
