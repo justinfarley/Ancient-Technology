@@ -258,6 +258,7 @@ MonoBehaviour:
   useTrigger: 0
   maxHealth: 20
   startFacingRight: 1
+  isStatic: 0
   moveSpeed: 3
   noticedPopup: {fileID: 4868294266182060294}
   fov: {fileID: 4868294264135993808}

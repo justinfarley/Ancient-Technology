@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PatrolEnemy : Enemy
@@ -23,9 +24,20 @@ public class PatrolEnemy : Enemy
         {
             //kill player;
         };
-        animator.SetBool("isRunning", runner);
-
-        Patrol(waitTime);
+        if (!isStatic)
+        {
+            animator.SetBool("isRunning", runner);
+            Patrol(waitTime);
+        }
+        else
+        {
+            if (!startFacingRight)
+            {
+                spriteRenderer.flipX = true;
+                isFacingRight = false;
+            }
+        }
+        
     }
     public override void TakeDamage(float damage)
     {
@@ -63,12 +75,15 @@ public class PatrolEnemy : Enemy
     }
     private IEnumerator Patrol_cr(float waitTime)
     {
+        if (waitTime < 0) yield break;
         yield return new WaitForSeconds(waitTime);
         animator.enabled = true;
         isFacingRight = !isFacingRight;
         spriteRenderer.flipX = !isFacingRight;
         SwapFovPos();
-        animator.SetInteger("Horizontal", 1);
+        if(!isStatic)
+            animator.SetInteger("Horizontal", 1);
+        else GetComponent<SpriteRenderer>().sprite = rightFacingSprite;
         for (float i = 0; i <= moveForTime; i += Time.deltaTime)
         {
             _rb.velocity = new Vector2(isFacingRight ? moveSpeed : -moveSpeed, _rb.velocity.y);
@@ -77,7 +92,9 @@ public class PatrolEnemy : Enemy
         _rb.velocity = new Vector2(isFacingRight ? moveSpeed : -moveSpeed, _rb.velocity.y);
         yield return null;
         _rb.velocity = Vector2.zero;
-        animator.SetInteger("Horizontal", 0);
+        if (!isStatic)
+            animator.SetInteger("Horizontal", 0);
+        else GetComponent<SpriteRenderer>().sprite = rightFacingSprite;
         animator.enabled = false;
         GetComponent<SpriteRenderer>().sprite = rightFacingSprite;
         ResetFovPos();
@@ -94,6 +111,12 @@ public class PatrolEnemy : Enemy
         Gizmos.DrawWireSphere(graphicSphere2, 0.2f);
         Gizmos.color = Color.red;
         Gizmos.DrawLine(graphicSphere1, graphicSphere2);
+    }
+
+    protected override bool NoticeCondition()
+    {
+        //has no extra condition to get noticed (just has to step in cone)
+        return false;
     }
 
     /*  for(float f = 0; f < timeToMove; f += (Time.deltaTime * moveSpeed))

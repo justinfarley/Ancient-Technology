@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Tilemaps;
 using UnityEngine;
 
 /// <summary>
@@ -11,12 +12,13 @@ using UnityEngine;
 ///         optionally death screen
 ///     reload scene
 /// </summary>
-public class Enemy : CollidableObject
+public abstract class Enemy : CollidableObject
 {
     [SerializeField] protected float maxHealth;
-    [SerializeField] protected bool startFacingRight;
+    [SerializeField] protected bool startFacingRight, isStatic;
     [SerializeField] protected float moveSpeed;
     [SerializeField] private GameObject noticedPopup;
+    protected bool isDetector = false;
     public FieldOfView fov;
     protected Animator animator;
     protected float health;
@@ -39,27 +41,35 @@ public class Enemy : CollidableObject
         player = FindObjectOfType<PlayerMovement>();
         health = maxHealth;
         OnDamageTaken += DamageTaken;
-        OnNoticedPlayer += Noticed;
+        OnNoticedPlayer += NoticedEventHelperMethod;
     }
 
 
     protected virtual void Update()
     {
-        if (fov.IsPlayerInView() && IsEnemyFacingTowardsPlayer() && !noticedPlayer)
+        if (IsNoticed())
         {
             NoticedPlayer();
         }
-        if (Input.GetKeyDown(KeyCode.V))
-        {
-            Instantiate(this.gameObject, gameObject.transform.position, Quaternion.identity); 
-        }
     }
-    private void Noticed()
+    private bool IsNoticed()
+    {
+        if (NoticeCondition()) 
+            return true;
+        if (fov != null && fov.IsPlayerInView() && IsEnemyFacingTowardsPlayer() && !noticedPlayer)
+            return true;
+        if (Input.GetKeyDown(KeyCode.V)) //TODO: remove, is a test
+            return true;
+        return false;
+    }
+    protected abstract bool NoticeCondition();
+    private void NoticedEventHelperMethod()
     {
         noticedPlayer = true;
         StopAllCoroutines();
         noticedPopup.SetActive(true);
-        HandleAnimatorOnNoticed();
+        if(!isDetector)
+            HandleAnimatorOnNoticed();
         IncreaseMoveSpeed();
         FindObjectOfType<DeathManager>().Invoke(KILL_PLAYER, 1f);
     }
@@ -99,7 +109,8 @@ public class Enemy : CollidableObject
     {
         if (collision.gameObject.GetComponent<PlayerMovement>()) //if player collided with enemy
         {
-            NoticedPlayer(); //immediately alerted
+            if(!isDetector)
+                NoticedPlayer(); //immediately alerted if can be noticed by touch
         }
     }
 

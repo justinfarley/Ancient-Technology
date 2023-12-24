@@ -8,6 +8,7 @@ public class PlayerMovement : CollidableObject
     [SerializeField] private float speed, groundCheckRadius, maxHSpeed, maxVSpeed;
     [SerializeField] private LayerMask groundCheckIgnoreLayers;
     [SerializeField] private Vector2 jumpForce;
+    [SerializeField] private KeyCode jumpKey;
     private Animator animator;
     private SpriteRenderer spriteRenderer;
     private float x;
@@ -33,7 +34,7 @@ public class PlayerMovement : CollidableObject
     }   
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Space)) 
+        if(Input.GetKeyDown(jumpKey)) 
         {
             HandleJump();
         }
@@ -47,6 +48,10 @@ public class PlayerMovement : CollidableObject
             }
             Time.timeScale = 1;
         }
+    }
+    public KeyCode GetJumpKey() 
+    {
+        return jumpKey; 
     }
     private void HandleMovement()
     {

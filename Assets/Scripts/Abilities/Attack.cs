@@ -64,12 +64,15 @@ public class Attack : Ability
     }
     private bool CanShoot()
     {
-        //TODO: implement conditions
-        foreach(var key in GetComponent<Teleport>().GetAbilityKeys())
+        if (!GameManager.instance.HasAttack) return false; //attack must be unlocked...
+        foreach (var key in GetComponent<Teleport>().GetAbilityKeys()) //one of the input keys has to be pressed (left click)
         {
             if (Input.GetKey(key)) return false;
         }
-        if (!GameManager.instance.HasAttack) return false;
+        foreach(var ability in GetComponents<Ability>()) //all abilities must be OFF cooldown
+        {
+            if (ability.OnCooldown()) return false;
+        }
         return true;
     }
     private void SpawnLazer()
