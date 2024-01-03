@@ -11,6 +11,7 @@ using System;
 //TODO: maybe drone that like flies above and has the sight cone on the bottom of it
 //TODO: maybe boss at the end where you have to avoid the attacks and make him smash himself into a wall or something... OR
 //TODO: maybe you can hit the boss and you need to hit him enough times etc.
+//TODO: GENERATIVE FILL ON BACKGROUND FOR VERTICAL PARALLAX
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;

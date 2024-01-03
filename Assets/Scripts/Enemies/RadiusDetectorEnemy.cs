@@ -29,8 +29,12 @@ public class RadiusDetectorEnemy : Enemy
             Detectable.Camo => camoDectectorSprite,
             Detectable.AnyAbility => anyAbilityDetectedSprite,
             _ => null
-        }; 
-        sr.gameObject.transform.localScale = new Vector3(radius, radius, sr.gameObject.transform.localScale.z);
+        };
+        Vector2 size = sr.size;
+        size.x = radius;
+        size.y = radius;
+        sr.size = size;
+        //sr.gameObject.transform.localScale = new Vector3(radius, radius, sr.gameObject.transform.localScale.z); OBSOLETE replacement for lines 34-36
         isDetector = true;
     }
     protected override void Update()
@@ -54,7 +58,7 @@ public class RadiusDetectorEnemy : Enemy
             case Detectable.Jump:
                 return Input.GetKeyDown(player.GetJumpKey());
             case Detectable.Teleport:
-                return player.GetComponent<Teleport>().GetCanUseAbility();
+                return Input.GetKey(KeyCode.Mouse0) && player.GetComponent<Teleport>().OnCooldown();
             case Detectable.Camo:
                 return player.GetComponent<Camo>().GetCanUseAbility();
             case Detectable.AnyAbility:
