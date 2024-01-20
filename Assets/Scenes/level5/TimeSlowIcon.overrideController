@@ -1,0 +1,13 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!221 &22100000
+AnimatorOverrideController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: TimeSlowIcon
+  m_Controller: {fileID: 9100000, guid: 6c70186fb30d2e1439a5dd82f9baa17c, type: 2}
+  m_Clips:
+  - m_OriginalClip: {fileID: 7400000, guid: ac2709994778ad549af52cc8576ad464, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 517ed6c89a1ce2d49a3ff016eabd6a1d, type: 2}
